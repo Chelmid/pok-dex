@@ -1,14 +1,14 @@
-import { TEST } from './constant-actions'
+
 
 // initialisation des states
 let stateInit = {
-    dragons: [
+    users: [
         "Apalala",
         "Balaur",
-        "Bolla"
+        "Bollaa"
     ],
 }
-let reducerDragon = (state = stateInit, action = {}) => {
+let reducer = (state = stateInit, action = {}) => {
 
     switch (action.type) {
 
@@ -22,4 +22,4 @@ let reducerDragon = (state = stateInit, action = {}) => {
     return state
 }
 
-export default reducerDragon;
+export default reducer;

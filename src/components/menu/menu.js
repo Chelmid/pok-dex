@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import logo from '../logo.svg';
-import { test } from '../reducer/actions-type'
+import logo from '../../logo.svg';
+import { test } from '../../reducer/autres/actions-type'
 // on va se connecter au store pour lire le state
 import { connect } from 'react-redux';
 
@@ -10,7 +10,7 @@ const Menu = () => {
     const [ msg, setMsg] = useState('')
 
     const test = async () => {
-        const data =  await fetch('/api/message').then((res) =>res.json()).then(msg => setMsg(msg.msg))
+        await fetch('/api/message').then((res) =>res.json()).then(msg => setMsg(msg.msg))
     }
 
     return (
@@ -22,11 +22,9 @@ const Menu = () => {
     )
 }
 const mapStateToProps = state => {
-
+console.log(state.dragons)
     return {
         dragons: state.dragons,
-        elements: state.elements,
-        count2 : state.count2
     }
 }
 
