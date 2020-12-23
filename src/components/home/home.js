@@ -9,6 +9,7 @@ const Home = () => {
 
     return (
         <div className='container'>
+            <div className='text-center'>Ton pokedex</div>
            <Pokemon />
         </div>
     )

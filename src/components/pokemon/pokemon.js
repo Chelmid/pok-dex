@@ -27,17 +27,26 @@ const Pokemon = () => {
             )
     }, [])
 
-    let count = 0
+    const detail = () => {
+        console.log('click')
+    }
+
+    let count = 1
 
     return (
         <div>
             <ul className="d-flex flex-wrap">
-            {pokemonList.map(pokemon => (
-                <div className="pokemon" key={count = count + 1}>
-                    <li className="text-center">{count}</li>
-                    <li className="text-center">{pokemon.name}</li>
-                </div>
-            ))}
+                {pokemonList.map(pokemon => (
+                    <div className="pokemon" key={count = count + 1}>
+                        <a href='' >
+                            <li className="text-center">{count}</li>
+                            <div className="text-center">
+                                <img src={`${'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + count + '.png'}`} />
+                            </div>
+                            <li className="text-center">{pokemon.name}</li>
+                        </a>
+                    </div>
+                ))}
             </ul>
         </div>
     )
