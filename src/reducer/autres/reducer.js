@@ -1,4 +1,4 @@
-import { TEST } from './constant-actions'
+import { INIT } from './constant-actions'
 
 // initialisation des states
 let stateInit = {
@@ -12,7 +12,7 @@ let reducer = (state = stateInit, action = {}) => {
 
     switch (action.type) {
 
-        case TEST:
+        case INIT:
 
             return { ...state, dragon: action.payload }
 

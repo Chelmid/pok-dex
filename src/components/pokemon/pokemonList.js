@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import logo from '../../logo.svg';
 import { test } from '../../reducer/autres/actions-type'
 // on va se connecter au store pour lire le state
 import { connect } from 'react-redux';
-import PokemonList from '../pokemon/pokemonList';
-import Menu from '../menu/menu';
+import Routes from '../../router/routes'
+import Pokemon from '../pokemon/pokemon'
 
 import {
     BrowserRouter as Router,
@@ -15,9 +14,9 @@ import {
     useParams
 } from "react-router-dom";
 
-const Home = (props) => {
+const PokemonList = (props) => {
 
-    console.log(props)
+    const pokemon = props
 
     const [pokemonList, setPokemonList] = useState([])
 
@@ -27,7 +26,6 @@ const Home = (props) => {
             .then(
                 (data) => {
                     setPokemonList(data.results);
-                    console.log(...data.results.keys())
                 },
                 // Note: it's important to handle errors here
                 // instead of a catch() block so that we don't swallow
@@ -38,32 +36,28 @@ const Home = (props) => {
             )
     }, [])
 
-    let count = 1
+    let { id } = useParams();
+
+    console.log(id)
+    console.log(pokemonList[id])
 
     return (
-        <div className='container'>
-            <Router>
-            <Link to={"/"}>
-                <Menu />
-            </Link>
-                <div className='text-center'>Ton pokedex</div>
-                <ul className="d-flex flex-wrap">
-                    {pokemonList.map(pokemon => (
-                        <Link to={"/Pokemon/" + count}>
-                            <PokemonList name={pokemon.name} count={count = count + 1} />
-                        </Link>
-                    ))}
-                </ul>
-                <Switch>
-                    <Route path="/Pokemon/:id" children={<PokemonList />} />
-                </Switch>
-            </Router>
+        <div>
+            <div className="pokemon">
+
+                <li className="text-center">{pokemon.count || id}</li>
+                <div className="text-center">
+                    <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + `${pokemon.count != undefined ? pokemon.count : id}` + '.png'} />
+                </div>
+                <li className="text-center">{ pokemon.name}</li>
+
+            </div>
+
         </div>
     )
 }
 
 const mapStateToProps = state => {
-    console.log(state.dragons)
     return {
         dragons: state.dragons,
     }
@@ -83,4 +77,4 @@ const mapDispatchToPros = dispatch => {
  const mapDispatchToPros = { increment } 
 */
 
-export default connect(mapStateToProps, mapDispatchToPros)(Home);
+export default connect(mapStateToProps, mapDispatchToPros)(PokemonList);
