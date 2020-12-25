@@ -55,7 +55,7 @@ const Home = (props) => {
                     ))}
                 </ul>
                 <Switch>
-                    <Route path="/Pokemon/:id" children={<PokemonList />} />
+                    <Route path="/Pokemon/:id" component={PokemonList} />
                 </Switch>
             </Router>
         </div>
