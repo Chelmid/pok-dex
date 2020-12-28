@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import logo from '../../logo.svg';
 import { test } from '../../reducer/autres/actions-type'
 // on va se connecter au store pour lire le state
 import { connect } from 'react-redux';
@@ -11,8 +10,6 @@ import {
     Switch,
     Route,
     Link,
-    Redirect,
-    useParams
 } from "react-router-dom";
 
 const Home = (props) => {
@@ -38,7 +35,7 @@ const Home = (props) => {
             )
     }, [])
 
-    let count = 1
+    let count = 0
 
     return (
         <div className='container'>
@@ -49,7 +46,7 @@ const Home = (props) => {
                 <div className='text-center'>Ton pokedex</div>
                 <ul className="d-flex flex-wrap">
                     {pokemonList.map(pokemon => (
-                        <Link to={"/Pokemon/" + count}>
+                        <Link to={"/Pokemon/" + (count + 1)}>
                             <PokemonList name={pokemon.name} count={count = count + 1} />
                         </Link>
                     ))}
@@ -63,9 +60,9 @@ const Home = (props) => {
 }
 
 const mapStateToProps = state => {
-    console.log(state.dragons)
+    console.log(state.idPokemon)
     return {
-        dragons: state.dragons,
+        dragons: state.idPokemon,
     }
 }
 

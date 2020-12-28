@@ -34,7 +34,7 @@ const Menu = () => {
     )
 }
 const mapStateToProps = state => {
-    console.log(state.dragons)
+    console.log(state.pokemon)
     return {
         dragons: state.dragons,
     }
