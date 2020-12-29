@@ -36,21 +36,21 @@ const PokemonList = (props) => {
             )
     }, [])
 
+
+    //recupere url parametre
     let { id } = useParams();
 
-    console.log(id)
-    console.log(pokemonList[id])
+    /*console.log(id)
+    console.log(pokemonList[id])*/
 
     return (
         <div>
             <div className="pokemon">
-
                 <li className="text-center">{pokemon.count || id}</li>
                 <div className="text-center">
                     <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + `${pokemon.count != undefined ? pokemon.count : id}` + '.png'} />
                 </div>
-                <li className="text-center">{ pokemon.name}</li>
-
+                <li className="text-center">{pokemon.name}</li>
             </div>
 
         </div>

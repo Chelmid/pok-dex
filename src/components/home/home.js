@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { test } from '../../reducer/autres/actions-type'
+import { init } from '../../reducer/autres/actions-type'
 // on va se connecter au store pour lire le state
 import { connect } from 'react-redux';
 import PokemonList from '../pokemon/pokemonList';
@@ -14,12 +14,15 @@ import {
 
 const Home = (props) => {
 
-    console.log(props)
-
     const [pokemonList, setPokemonList] = useState([])
+    
+    const { pokemonId, pokemonUrl } = props
+
+    console.log(pokemonId)
 
     useEffect(() => {
-        const test = fetch("https://pokeapi.co/api/v2/pokemon?limit=20")
+
+        const test = fetch(pokemonUrl)
             .then(res => res.json())
             .then(
                 (data) => {
@@ -46,7 +49,7 @@ const Home = (props) => {
                 <div className='text-center'>Ton pokedex</div>
                 <ul className="d-flex flex-wrap">
                     {pokemonList.map(pokemon => (
-                        <Link to={"/Pokemon/" + (count + 1)}>
+                        <Link to={"/Pokemon/" + props.init(1)}>
                             <PokemonList name={pokemon.name} count={count = count + 1} />
                         </Link>
                     ))}
@@ -60,14 +63,17 @@ const Home = (props) => {
 }
 
 const mapStateToProps = state => {
-    console.log(state.idPokemon)
+    console.log(state)
     return {
-        dragons: state.idPokemon,
+        pokemonId : state.idPokemon,
+        pokemonUrl : state.apiPokemon,
     }
 }
 
 // Dispatch sur les props 
-const mapDispatchToPros = { test }
+const mapDispatchToPros = dispatch => { 
+    return { init : payload => dispatch( init (payload) ) } // action.payload dans le reducer
+ } 
 
 /*
 const mapDispatchToPros = dispatch => { 

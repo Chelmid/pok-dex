@@ -4,4 +4,4 @@ import { INIT, ADD_TEST } from './constant-actions';
 export const test = () => { return { type: INIT }  } ;
 
 
-export const add = (payload) => { return { type: ADD_TEST, payload }  } ;
+export const init = (payload) => { return { type: INIT, payload }  } ;

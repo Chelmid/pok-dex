@@ -3,17 +3,6 @@ import logo from '../../logo.svg';
 import { test } from '../../reducer/autres/actions-type'
 // on va se connecter au store pour lire le state
 import { connect } from 'react-redux';
-import Home from '../home/home'
-
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    Redirect
-} from "react-router-dom";
-import home from '../home/home';
-
 
 const Menu = () => {
     const [msg, setMsg] = useState('')
