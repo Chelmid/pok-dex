@@ -38,8 +38,6 @@ const Home = (props) => {
             )
     }, [])
 
-    let count = 0
-
     return (
         <div className='container'>
             <Router>
