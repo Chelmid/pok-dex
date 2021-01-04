@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { init } from '../../reducer/autres/actions-type'
+import { init, setPokemon, setStatusOnePokemon } from '../../reducer/autres/actions-type'
 // on va se connecter au store pour lire le state
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PokemonList from '../pokemon/pokemonList';
+import Pokemon from '../pokemon/pokemon';
 import Menu from '../menu/menu';
 
 import {
@@ -10,24 +11,30 @@ import {
     Switch,
     Route,
     Link,
+    useParams
 } from "react-router-dom";
 
-const Home = (props) => {
+const Home = () => {
+
+    const { apiPokemon } = useSelector(state => state);
+    const dispatch = useDispatch();
 
     const [pokemonList, setPokemonList] = useState([])
+
+    let count = 0
+    let ratio = 1
+ console.log(apiPokemon)
+    let onePokemon = window.location.href == 'http://localhost:3000/' ? true : false
     
-    const { pokemonId, pokemonUrl } = props
-
-    console.log(pokemonId)
-
     useEffect(() => {
 
-        const test = fetch(pokemonUrl)
+        const test = fetch(apiPokemon)
             .then(res => res.json())
             .then(
                 (data) => {
                     setPokemonList(data.results);
                     console.log(...data.results.keys())
+                    init(...data.results.keys())
                 },
                 // Note: it's important to handle errors here
                 // instead of a catch() block so that we don't swallow
@@ -37,6 +44,10 @@ const Home = (props) => {
                 }
             )
     }, [])
+    
+    const handleClick = (e) => {
+        setStatusOnePokemon('false')
+      }
 
     return (
         <div className='container'>
@@ -45,43 +56,20 @@ const Home = (props) => {
                 <Menu />
             </Link>
                 <div className='text-center'>Ton pokedex</div>
+                {true && (
                 <ul className="d-flex flex-wrap">
                     {pokemonList.map(pokemon => (
-                        <Link to={"/Pokemon/" + props.init(1)}>
-                            <PokemonList name={pokemon.name} count={count = count + 1} />
+                        <Link to={"/Pokemon/" + (count + ratio) } value={(count + ratio)} onClick={handleClick}>
+                            <PokemonList name={pokemon.name} count={count = count + ratio} />
                         </Link>
                     ))}
-                </ul>
+                </ul>)}
                 <Switch>
-                    <Route path="/Pokemon/:id" component={PokemonList} />
+                    <Route path="/Pokemon/:id" component={Pokemon} />
                 </Switch>
             </Router>
         </div>
     )
 }
 
-const mapStateToProps = state => {
-    console.log(state)
-    return {
-        pokemonId : state.idPokemon,
-        pokemonUrl : state.apiPokemon,
-    }
-}
-
-// Dispatch sur les props 
-const mapDispatchToPros = dispatch => { 
-    return { init : payload => dispatch( init (payload) ) } // action.payload dans le reducer
- } 
-
-/*
-const mapDispatchToPros = dispatch => { 
-    return { increment : payload => dispatch(  {type: 'INCREMENT', payload } ) } // action.payload dans le reducer
- } 
- const mapDispatchToPros = dispatch => { 
-    return { increment : payload => dispatch( increment(payload) ) } // action.payload dans le reducer
- } 
- // la version courte qui marche également est la suivante 
- const mapDispatchToPros = { increment } 
-*/
-
-export default connect(mapStateToProps, mapDispatchToPros)(Home);
+export default Home;

@@ -1,24 +1,32 @@
-import { INIT } from './constant-actions'
+import { INIT, SET_POKEMON_ID, STATUS_ONE_POKEMON } from './constant-actions'
 
 // initialisation des states
-let stateInit = {
-    idPokemon : 1,
-    apiPokemon :'https://pokeapi.co/api/v2/pokemon?limit=20',
-    countPokemon : 0
+const initialState = {
+    idPokemon: 1,
+    apiPokemon: 'https://pokeapi.co/api/v2/pokemon?limit=20',
+    countPokemon: [],
+    statusOnePokemon: true
 }
-let reducer = (state = stateInit, action = {}) => {
+export default (state = initialState , action = {}) => {
 
     switch (action.type) {
 
         case INIT:
-            console.log( state, action.payload )
+            console.log(state.countPokemon)
 
-            return { ...state, countPokemon: action.payload + state.countPokemon }
+            return { ...state, countPokemon: state.countPokemon.push(action.payload) }
 
+        /*case SET_POKEMON_ID:
+            console.log(state.countPokemon)
+
+            return { ...state, idPokemon: action.payload }
+
+        case STATUS_ONE_POKEMON:
+            console.log(state.countPokemon)
+
+            return { ...state, statusOnePokemon: action.payload }
+        */
         default:
             return state;
     }
-    return state
 }
-
-export default reducer;

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { test } from '../../reducer/autres/actions-type'
 // on va se connecter au store pour lire le state
 import { connect } from 'react-redux';
 import Routes from '../../router/routes'
@@ -20,7 +19,7 @@ const PokemonList = (props) => {
 
     const [pokemonList, setPokemonList] = useState([])
 
-    useEffect(() => {
+    /*useEffect(() => {
         const test = fetch("https://pokeapi.co/api/v2/pokemon?limit=20")
             .then(res => res.json())
             .then(
@@ -34,7 +33,7 @@ const PokemonList = (props) => {
 
                 }
             )
-    }, [])
+    }, [])*/
 
 
     //recupere url parametre
@@ -64,7 +63,7 @@ const mapStateToProps = state => {
 }
 
 // Dispatch sur les props 
-const mapDispatchToPros = { test }
+const mapDispatchToPros = { }
 
 /*
 const mapDispatchToPros = dispatch => { 

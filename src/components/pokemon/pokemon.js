@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { test } from '../../reducer/autres/actions-type'
 // on va se connecter au store pour lire le state
 import { connect } from 'react-redux';
 
@@ -24,7 +23,7 @@ const mapStateToProps = state => {
 }
 
 // Dispatch sur les props 
-const mapDispatchToPros = { test }
+const mapDispatchToPros = { }
 
 /*
 const mapDispatchToPros = dispatch => { 
