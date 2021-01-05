@@ -11,21 +11,21 @@ export default (state = initialState , action = {}) => {
 
     switch (action.type) {
 
-        case INIT:
+        case 'INIT':
             console.log(state.countPokemon)
 
             return { ...state, countPokemon: state.countPokemon.push(action.payload) }
 
-        /*case SET_POKEMON_ID:
+        case 'SET_POKEMON_ID':
             console.log(state.countPokemon)
 
             return { ...state, idPokemon: action.payload }
 
-        case STATUS_ONE_POKEMON:
-            console.log(state.countPokemon)
+        case 'STATUS_ONE_POKEMON':
+            console.log(state.statusOnePokemon)
 
-            return { ...state, statusOnePokemon: action.payload }
-        */
+            return { ...state, statusOnePokemon: action.status }
+
         default:
             return state;
     }

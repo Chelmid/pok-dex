@@ -16,16 +16,15 @@ import {
 
 const Home = () => {
 
-    const { apiPokemon } = useSelector(state => state);
+    const { apiPokemon, idPokemon, countPokemon, statusOnePokemon } = useSelector(state => state);
     const dispatch = useDispatch();
 
     const [pokemonList, setPokemonList] = useState([])
 
     let count = 0
     let ratio = 1
- console.log(apiPokemon)
-    let onePokemon = window.location.href == 'http://localhost:3000/' ? true : false
-    
+    console.log(apiPokemon)
+
     useEffect(() => {
 
         const test = fetch(apiPokemon)
@@ -44,26 +43,32 @@ const Home = () => {
                 }
             )
     }, [])
-    
-    const handleClick = (e) => {
-        setStatusOnePokemon('false')
-      }
 
+    const handleClick = (e) => {
+        dispatch({
+            type: 'STATUS_ONE_POKEMON',
+            statusOnePokemon: false
+        })
+    }
+    console.log(statusOnePokemon)
     return (
         <div className='container'>
             <Router>
-            <Link to={"/"}>
-                <Menu />
-            </Link>
+                <Link to={"/"}>
+                    <Menu />
+                </Link>
                 <div className='text-center'>Ton pokedex</div>
-                {true && (
-                <ul className="d-flex flex-wrap">
-                    {pokemonList.map(pokemon => (
-                        <Link to={"/Pokemon/" + (count + ratio) } value={(count + ratio)} onClick={handleClick}>
-                            <PokemonList name={pokemon.name} count={count = count + ratio} />
-                        </Link>
-                    ))}
-                </ul>)}
+                {statusOnePokemon && (
+                    <ul className="d-flex flex-wrap">
+                        {pokemonList.map(pokemon => (
+                            <Link to={"/Pokemon/" + (count + ratio)} value={(count + ratio)} onClick={e => dispatch({
+                                type: 'STATUS_ONE_POKEMON',
+                                status: false
+                            })}>
+                                <PokemonList name={pokemon.name} count={count = count + ratio} />
+                            </Link>
+                        ))}
+                    </ul>)}
                 <Switch>
                     <Route path="/Pokemon/:id" component={Pokemon} />
                 </Switch>
