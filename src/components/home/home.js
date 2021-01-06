@@ -16,7 +16,7 @@ import {
 
 const Home = () => {
 
-    const { apiPokemon, idPokemon, countPokemon, statusOnePokemon } = useSelector(state => state);
+    const { apiPokemon, idPokemon, countPokemon, displayOnePokemon } = useSelector(state => state.ReducerPokemonlist);
     const dispatch = useDispatch();
 
     const [pokemonList, setPokemonList] = useState([])
@@ -32,8 +32,11 @@ const Home = () => {
             .then(
                 (data) => {
                     setPokemonList(data.results);
-                    console.log(...data.results.keys())
-                    init(...data.results.keys())
+                    console.log(data.results)
+                    dispatch({
+                        type: 'COUNTER_POKEMON',
+                        counter: data.results.keys()
+                    })
                 },
                 // Note: it's important to handle errors here
                 // instead of a catch() block so that we don't swallow
@@ -44,33 +47,27 @@ const Home = () => {
             )
     }, [])
 
-    const handleClick = (e) => {
-        dispatch({
-            type: 'STATUS_ONE_POKEMON',
-            statusOnePokemon: false
-        })
-    }
-    console.log(statusOnePokemon)
+    console.log(displayOnePokemon)
     return (
         <div className='container'>
             <Router>
-                <Link to={"/"}>
-                    <Menu />
-                </Link>
-                <div className='text-center'>Ton pokedex</div>
-                {statusOnePokemon && (
-                    <ul className="d-flex flex-wrap">
-                        {pokemonList.map(pokemon => (
-                            <Link to={"/Pokemon/" + (count + ratio)} value={(count + ratio)} onClick={e => dispatch({
-                                type: 'STATUS_ONE_POKEMON',
-                                status: false
-                            })}>
-                                <PokemonList name={pokemon.name} count={count = count + ratio} />
-                            </Link>
-                        ))}
-                    </ul>)}
+                <Menu />
+                {displayOnePokemon && (
+                    <div className='text-center'><h2>Pokedex</h2>
+                        <ul className="d-flex flex-wrap">
+                            {pokemonList.map(pokemon => (
+                                <Link to={"/Pokemon/" + (count + ratio)} key={(count + ratio)} onClick={e => dispatch({
+                                    type: 'STATUS_ONE_POKEMON',
+                                    display: false
+                                })}>
+                                    <PokemonList name={pokemon.name} count={count = count + ratio} />
+                                </Link>
+                            ))}
+                        </ul></div>)}
                 <Switch>
-                    <Route path="/Pokemon/:id" component={Pokemon} />
+                    {!displayOnePokemon && (
+                        <Route path="/Pokemon/:id" component={Pokemon} />
+                    )}
                 </Switch>
             </Router>
         </div>

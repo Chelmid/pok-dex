@@ -4,11 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
 
-import Reducer from './reducer/autres/reducer'
+import ReducerPokemonlist from './reducer/autres/reducerPokemonlist'
+import ReducerPokemon from './reducer/autres/reducerPokemon'
 
-const store = createStore(Reducer)
+const allReducers = combineReducers({
+  ReducerPokemonlist: ReducerPokemonlist,
+  ReducerPokemon: ReducerPokemon
+})
+
+const store = createStore(allReducers)
 
 ReactDOM.render(
   <Provider store={store}>
