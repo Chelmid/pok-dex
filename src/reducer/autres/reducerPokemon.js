@@ -1,12 +1,14 @@
-import { INIT, SET_POKEMON_ID, STATUS_ONE_POKEMON } from './constant-actions'
+//autres facon
+//import { INIT, SET_POKEMON_ID, STATUS_ONE_POKEMON } from './constant-actions'
 
 // initialisation des states
 const initialState = {
     idPokemon: '',
-    dataPokemon: ''
+    dataPokemon: '',
+    apiPokemonSolo: 'https://pokeapi.co/api/v2/pokemon/'
 
 }
-export default (state = initialState, action = {}) => {
+let ReducerPokemon = (state = initialState, action = {}) => {
 
     switch (action.type) {
 
@@ -24,3 +26,5 @@ export default (state = initialState, action = {}) => {
             return state;
     }
 }
+
+export default ReducerPokemon

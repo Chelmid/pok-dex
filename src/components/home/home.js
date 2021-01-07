@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { init, setPokemon, setStatusOnePokemon } from '../../reducer/autres/actions-type'
+
+// reducer autre facon
+//import { init, setPokemon, setStatusOnePokemon } from '../../reducer/autres/actions-type'
+
 // on va se connecter au store pour lire le state
 import { useDispatch, useSelector } from 'react-redux';
 import PokemonList from '../pokemon/pokemonList';
@@ -11,31 +14,35 @@ import {
     Switch,
     Route,
     Link,
-    useParams
 } from "react-router-dom";
 
 const Home = () => {
 
-    const { apiPokemon, idPokemon, countPokemon, displayOnePokemon } = useSelector(state => state.ReducerPokemonlist);
+    //call des élements du initState dans le reducerListPokemon
+    const { apiPokemon, displayOnePokemon } = useSelector(state => state.ReducerPokemonlist);
     const dispatch = useDispatch();
 
+    //state tempo
     const [pokemonList, setPokemonList] = useState([])
 
-    let count = 0
+    // le nombre de pokemon
     let ratio = 1
+
     console.log(apiPokemon)
 
+    //construtor
     useEffect(() => {
 
-        const test = fetch(apiPokemon)
+       fetch(apiPokemon)
             .then(res => res.json())
             .then(
                 (data) => {
                     setPokemonList(data.results);
                     console.log(data.results)
+                    //insere donnes dans le inttstate
                     dispatch({
                         type: 'COUNTER_POKEMON',
-                        counter: data.results.keys()
+                        counter: [...data.results.keys()]
                     })
                 },
                 // Note: it's important to handle errors here
@@ -45,25 +52,43 @@ const Home = () => {
 
                 }
             )
-    }, [])
+    }, [apiPokemon, dispatch])
 
-    console.log(displayOnePokemon)
+    //console.log(window.innerHeight)
+
+
+    const handleScroll = (e) => {
+        let scrollPourcentage  = document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight) * 100
+
+        if(scrollPourcentage > 70 ){
+            console.log('paf')
+            dispatch({
+                type: 'LIST_CONTINUE_POKEMON',
+                continue: 10
+            })
+        }
+    }
+
+    
+    window.addEventListener('scroll',handleScroll)
+
     return (
         <div className='container'>
             <Router>
                 <Menu />
                 {displayOnePokemon && (
                     <div className='text-center'><h2>Pokedex</h2>
-                        <ul className="d-flex flex-wrap">
-                            {pokemonList.map(pokemon => (
-                                <Link to={"/Pokemon/" + (count + ratio)} key={(count + ratio)} onClick={e => dispatch({
+                        <div className="d-flex flex-wrap">
+                            {pokemonList.map((pokemon, i) => (
+                                <Link to={"/Pokemon/" + (i + ratio)} value={i} key={i} onClick={e => dispatch({
                                     type: 'STATUS_ONE_POKEMON',
                                     display: false
                                 })}>
-                                    <PokemonList name={pokemon.name} count={count = count + ratio} />
+                                    <PokemonList name={pokemon.name} count={i + ratio} />
                                 </Link>
                             ))}
-                        </ul></div>)}
+                            
+                        </div></div>)}
                 <Switch>
                     {!displayOnePokemon && (
                         <Route path="/Pokemon/:id" component={Pokemon} />

@@ -1,12 +1,15 @@
-import { INIT, SET_POKEMON_ID, STATUS_ONE_POKEMON } from './constant-actions'
-
+//autre facon
+//import { INIT, SET_POKEMON_ID, STATUS_ONE_POKEMON } from './constant-actions'
+let total = 60
+let limite = 10
 // initialisation des states
 const initialState = {
-    apiPokemon: 'https://pokeapi.co/api/v2/pokemon?limit=30',
-    countPokemon: [],
-    displayOnePokemon: true
+    apiPokemon: 'https://pokeapi.co/api/v2/pokemon?limit=' + total,
+    displayOnePokemon: true,
+    pokemonListContinue : 'https://pokeapi.co/api/v2/pokemon/?limit=' + limite + '&offset=' + total
 }
-export default (state = initialState, action = {}) => {
+
+let ReducerPokemonlist = (state = initialState, action = {}) => {
 
     switch (action.type) {
 
@@ -23,9 +26,16 @@ export default (state = initialState, action = {}) => {
         case 'COUNTER_POKEMON':
             console.log(state.countPokemon)
 
-            return { ...state, countPokemon: state.countPokemon.push(action.counter) }
+            return { ...state, countPokemon: action.counter }
+
+        case 'LIST_CONTINUE_POKEMON':
+            console.log(state.pokemonListContinue)
+    
+            return { ...state, pokemonListContinue: 'https://pokeapi.co/api/v2/pokemon/?limit=' + limite + '&offset=' + (action.continue + total) }
 
         default:
             return state;
     }
 }
+
+export default ReducerPokemonlist

@@ -50,8 +50,12 @@ ul{
 
 .pokemon {
   height: auto;
-  width: 175px;
-  margin: 0 0 0 0;
+  width: 100px;
+  margin: 10px 10px 0 0;
   padding: 0 0 0 0;
   border: 1px solid black;
+}
+
+.capitalize {
+  text-transform: capitalize;
 }
