@@ -16,10 +16,12 @@ import {
     Link,
 } from "react-router-dom";
 
+import debounce from "lodash.debounce";
+
 const Home = () => {
 
     //call des élements du initState dans le reducerListPokemon
-    const { apiPokemon, displayOnePokemon } = useSelector(state => state.ReducerPokemonlist);
+    const { apiPokemon, displayOnePokemon, pokemonListContinue, total, pokemonListTotal } = useSelector(state => state.ReducerPokemonlist);
     const dispatch = useDispatch();
 
     //state tempo
@@ -53,24 +55,33 @@ const Home = () => {
                 }
             )
     }, [apiPokemon, dispatch])
-
-    //console.log(window.innerHeight)
-
-
-    const handleScroll = (e) => {
+    
+    window.onscroll = debounce(() => {
         let scrollPourcentage  = document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight) * 100
-
-        if(scrollPourcentage > 70 ){
-            console.log('paf')
+        if(scrollPourcentage > 80 ){
             dispatch({
                 type: 'LIST_CONTINUE_POKEMON',
-                continue: 10
+                continue: 30
             })
         }
-    }
+        fetch(pokemonListContinue)
+            .then(res => res.json())
+            .then(
+                (data) => {
+                    console.log(data.results)
+                    dispatch({
+                        type: 'LIST_TOTAL_POKEMON',
+                        nextList: data.results,
+                    })
+                },
+                // Note: it's important to handle errors here
+                // instead of a catch() block so that we don't swallow
+                // exceptions from actual bugs in components.
+                (error) => {
 
-    
-    window.addEventListener('scroll',handleScroll)
+                }
+            )
+      }, 50);
 
     return (
         <div className='container'>
@@ -79,15 +90,22 @@ const Home = () => {
                 {displayOnePokemon && (
                     <div className='text-center'><h2>Pokedex</h2>
                         <div className="d-flex flex-wrap">
-                            {pokemonList.map((pokemon, i) => (
+                            {pokemonList.map((pokemonList, i) => (
                                 <Link to={"/Pokemon/" + (i + ratio)} value={i} key={i} onClick={e => dispatch({
                                     type: 'STATUS_ONE_POKEMON',
                                     display: false
                                 })}>
-                                    <PokemonList name={pokemon.name} count={i + ratio} />
+                                    <PokemonList name={pokemonList.name} count={i + ratio} />
                                 </Link>
                             ))}
-                            
+                            {pokemonListTotal.map((pokemonListNext, i) => (
+                                <Link to={"/Pokemon/" + (total + i + ratio)} value={total + i} key={total + i} onClick={e => dispatch({
+                                    type: 'STATUS_ONE_POKEMON',
+                                    display: false
+                                })}>
+                                    <PokemonList name={pokemonListNext.name} count={total + i + ratio} />
+                                </Link>
+                            ))}
                         </div></div>)}
                 <Switch>
                     {!displayOnePokemon && (
