@@ -6,12 +6,12 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux'
 import { createStore, combineReducers } from 'redux'
 
-import ReducerPokemonlist from './reducer/autres/reducerPokemonlist'
-import ReducerPokemon from './reducer/autres/reducerPokemon'
+import ReducerPokemonlist from './reducer/pokemonReducer/reducerPokemonlist'
+import ReducerPokemon from './reducer/pokemonReducer/reducerPokemon'
 
 const allReducers = combineReducers({
-  ReducerPokemonlist: ReducerPokemonlist,
-  ReducerPokemon: ReducerPokemon
+  ReducerPokemonlist : ReducerPokemonlist,
+  ReducerPokemon : ReducerPokemon
 })
 
 const store = createStore(allReducers)

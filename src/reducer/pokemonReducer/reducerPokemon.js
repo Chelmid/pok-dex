@@ -5,7 +5,20 @@
 const initialState = {
     idPokemon: '',
     dataPokemon: '',
-    apiPokemonSolo: 'https://pokeapi.co/api/v2/pokemon/'
+    apiPokemonSolo: 'https://pokeapi.co/api/v2/pokemon/',
+    colorTypes : {
+        'bug' : 'lightgreen',
+        'water' : 'blue',
+        'fire' : 'red',
+        'grass' : 'green',
+        'poison' : '',
+        'poison' : '',
+        'poison' : '',
+        'poison' : '',
+        'poison' : '',
+        'poison' : '',
+        'poison' : '',
+    }
 
 }
 let ReducerPokemon = (state = initialState, action = {}) => {

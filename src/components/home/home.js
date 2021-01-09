@@ -56,6 +56,8 @@ const Home = () => {
             )
     }, [apiPokemon, dispatch])
     
+    // debounce scrolling infini
+    
     window.onscroll = debounce(() => {
         let scrollPourcentage  = document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight) * 100
         if(scrollPourcentage > 80 ){

@@ -1,4 +1,4 @@
-import React, {useEffect } from 'react';
+import React, { useEffect } from 'react';
 // on va se connecter au store pour lire le state
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -7,9 +7,11 @@ import {
 
 const Pokemon = () => {
 
-    const { idPokemon, dataPokemon, apiPokemonSolo } = useSelector(state => state.ReducerPokemon);
+    // les state dans ReducerPokemon
+    const { idPokemon, dataPokemon, apiPokemonSolo, colorTypes } = useSelector(state => state.ReducerPokemon);
     const dispatch = useDispatch();
 
+    // recupere parametre dans l'url
     let { id } = useParams();
 
     useEffect(() => {
@@ -19,6 +21,7 @@ const Pokemon = () => {
             .then(
                 (data) => {
                     console.log(data)
+                    //appel des dispacth dans le ReducerPokemon
                     dispatch({
                         type: 'SET_POKEMON_DATA',
                         data: data
@@ -37,17 +40,20 @@ const Pokemon = () => {
             )
     }, [apiPokemonSolo, id, dispatch])
 
-    console.log(dataPokemon)
-    console.log(idPokemon)
+    console.log(dataPokemon.types)
 
     return (
         <div className='mt-5'>
             <div>
-            <h2 className='capitalize'>N°{idPokemon} {dataPokemon.name}</h2>
-            <div className='d-flex'>{idPokemon && dataPokemon.types.map((type, i) => (<div key={i} className='mr-2'>{type.type.name}</div>))}</div>
-            <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + id + '.png'} alt=''/>
-            <h5>{(dataPokemon.height * 10)} cm / {(dataPokemon.weight / 10)} kg </h5>
-            <div className=''>{idPokemon && dataPokemon.stats.map((stat, i) => (<div key={i} className='mr-2'>{stat.stat.name} : {stat.base_stat}</div>))}</div>
+                <h2 className='capitalize'>N°{idPokemon} {dataPokemon.name}</h2>
+                <div className='d-flex'>{idPokemon && dataPokemon.types.map((type, i) => (
+                   Object.entries(colorTypes).map((color, j) => (
+                    color[0] === type.type.name ? <div key={j} className='mr-2 text-white' style={{backgroundColor: color[1]}}>{type.type.name}</div> : ''
+                   ))
+                    ))}</div>
+                <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + id + '.png'} alt='' />
+                <h5>{(dataPokemon.height * 10)} cm / {(dataPokemon.weight / 10)} kg </h5>
+                <div className=''>{idPokemon && dataPokemon.stats.map((stat, i) => (<div key={i} className='mr-2'>{stat.stat.name} : {stat.base_stat}</div>))}</div>
             </div>
         </div>
     )

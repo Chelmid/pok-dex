@@ -1,5 +1,6 @@
 import React from 'react';
 //import logo from '../../../public/pokeball.png';
+
 // on va se connecter au store pour lire le state
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -13,6 +14,8 @@ const Menu = () => {
     const test = async () => {
         await fetch('/api/message').then((res) => res.json()).then(msg => setMsg(msg.msg))
     }*/
+
+    // les states dans le ReducerPokemonlist
     const {displayOnePokemon } = useSelector(state => state.ReducerPokemonlist);
     const dispatch = useDispatch();
     return (
