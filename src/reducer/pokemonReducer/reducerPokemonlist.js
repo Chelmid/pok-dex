@@ -4,7 +4,7 @@
 //init 
 let totalInit = 60
 let limiteInit = 10
-let pokemonListTotalApi = 898
+let pokemonListTotalApi = 850
 
 // initialisation des states
 const initialState = {
@@ -38,9 +38,10 @@ let ReducerPokemonlist = (state = initialState, action = {}) => {
         case 'LIST_CONTINUE_POKEMON':
             console.log(state.pokemonListContinue)
 
-            if(state.limite <= pokemonListTotalApi){
+            console.log(state.limite)
+            if(state.limite <= pokemonListTotalApi ){
                 state.limite = state.limite + action.continue
-                return { ...state, pokemonListContinue: 'https://pokeapi.co/api/v2/pokemon/?limit=' + state.limite + '&offset=' + (state.total) }
+                return { ...state, pokemonListContinue: 'https://pokeapi.co/api/v2/pokemon/?limit=' + state.limite + '&offset=' + state.total }
             }else{
                 return state;
             }

@@ -60,10 +60,10 @@ const Home = () => {
     
     window.onscroll = debounce(() => {
         let scrollPourcentage  = document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight) * 100
-        if(scrollPourcentage > 80 ){
+        if(scrollPourcentage > 50 ){
             dispatch({
                 type: 'LIST_CONTINUE_POKEMON',
-                continue: 30
+                continue: 50
             })
         }
         fetch(pokemonListContinue)
@@ -83,7 +83,7 @@ const Home = () => {
 
                 }
             )
-      }, 50);
+      }, 500);
 
     return (
         <div className='container'>
@@ -101,12 +101,14 @@ const Home = () => {
                                 </Link>
                             ))}
                             {pokemonListTotal.map((pokemonListNext, i) => (
+                                i < 838 ?
                                 <Link to={"/Pokemon/" + (total + i + ratio)} value={total + i} key={total + i} onClick={e => dispatch({
                                     type: 'STATUS_ONE_POKEMON',
                                     display: false
                                 })}>
                                     <PokemonList name={pokemonListNext.name} count={total + i + ratio} />
                                 </Link>
+                                : ''
                             ))}
                         </div></div>)}
                 <Switch>

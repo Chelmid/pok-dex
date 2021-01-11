@@ -30,7 +30,7 @@ const Menu = () => {
             {!displayOnePokemon && (<Link className='ml-4' to={"/"} onClick={() => dispatch({
                 type: 'STATUS_ONE_POKEMON',
                 display: true
-            })}>retour</Link>)}
+            })}>back</Link>)}
             {//<button onClick={test}>test </button>
             /*<div>{msg}</div>*/}
         </div>
