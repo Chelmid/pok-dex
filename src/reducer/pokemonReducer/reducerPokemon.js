@@ -18,11 +18,11 @@ const initialState = {
         'poison' : '#CC33FF',
         'fighting' : '#CC3300',
         'rock' : 'grey',
-        'ghost' : 'lightblue',
-        'psychic' : 'lightblue',
+        'ghost' : '#660099',
+        'psychic' : '#FF00FF',
         'electric' : 'yellow',
-        'dark' : 'dark',
-        'dragon' : 'lightblue',
+        'dark' : '#333333',
+        'dragon' : '#6600FF',
     }
 
 }

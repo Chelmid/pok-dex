@@ -63,7 +63,7 @@ const Home = () => {
         if(scrollPourcentage > 50 ){
             dispatch({
                 type: 'LIST_CONTINUE_POKEMON',
-                continue: 50
+                continue: 40
             })
         }
         fetch(pokemonListContinue)
