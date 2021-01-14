@@ -2,7 +2,7 @@
 //import { INIT, SET_POKEMON_ID, STATUS_ONE_POKEMON } from './constant-actions'
 
 //init 
-let totalInit = 60
+let totalInit = 70
 let limiteInit = 10
 let pokemonListTotalApi = 850
 
@@ -13,7 +13,8 @@ const initialState = {
     apiPokemon: 'https://pokeapi.co/api/v2/pokemon?limit=' + totalInit,
     displayOnePokemon: true,
     pokemonListContinue: 'https://pokeapi.co/api/v2/pokemon/?limit=' + limiteInit + '&offset=' + totalInit,
-    pokemonListTotal: []
+    pokemonListTotal: [],
+    positionScroll : ''
 }
 
 let ReducerPokemonlist = (state = initialState, action = {}) => {

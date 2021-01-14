@@ -67,13 +67,13 @@ const Pokemon = () => {
                 <div> height / weight </div>
                 <div>{(dataPokemon.height * 10)} cm / {(dataPokemon.weight / 10)} kg </div>
                 <div>
-                    base experience : {dataPokemon.base_experience} 
+                    base experience : {dataPokemon.base_experience}
                 </div>
             </div>
             <div className='col-4'>
                 <h5 className='mt-5'>Stats</h5>
                 <div className=''>{idPokemon && dataPokemon.stats.map((stat, i) => (<div key={i} className='mr-2'>{stat.stat.name} : {stat.base_stat}</div>))}</div>
-            </div>            
+            </div>
             <div className='col-4'>
                 <h5 className='mt-5'>Abilities</h5>
                 <div>{idPokemon && dataPokemon.abilities.map((ability, i) => (

@@ -59,3 +59,7 @@ ul{
 .capitalize {
   text-transform: capitalize;
 }
+
+.App-logo-list {
+  height: 20px;
+}

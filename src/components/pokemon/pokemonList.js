@@ -16,7 +16,7 @@ const PokemonList = (props) => {
     return (
         <div>
             <div className="pokemon">
-                <li className="text-center">{pokemon.count || id}</li>
+                <li className="text-center"> <img src={'/pokeball.png'} className="App-logo-list" alt="logo" /> N° {pokemon.count || id}</li>
                 <div className="text-center">
                     <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + (pokemon.count !== undefined ? pokemon.count : id) + '.png'} alt='' />
                 </div>

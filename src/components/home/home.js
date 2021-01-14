@@ -21,7 +21,7 @@ import debounce from "lodash.debounce";
 const Home = () => {
 
     //call des élements du initState dans le reducerListPokemon
-    const { apiPokemon, displayOnePokemon, pokemonListContinue, total, pokemonListTotal } = useSelector(state => state.ReducerPokemonlist);
+    const { apiPokemon, displayOnePokemon, pokemonListContinue, total, pokemonListTotal, positionScroll } = useSelector(state => state.ReducerPokemonlist);
     const dispatch = useDispatch();
 
     //state tempo
@@ -54,7 +54,8 @@ const Home = () => {
 
                 }
             )
-    }, [apiPokemon, dispatch])
+            document.documentElement.scrollTop = positionScroll
+    }, [apiPokemon, dispatch, positionScroll])
     
     // debounce scrolling infini
     
@@ -63,14 +64,14 @@ const Home = () => {
         if(scrollPourcentage > 50 ){
             dispatch({
                 type: 'LIST_CONTINUE_POKEMON',
-                continue: 40
+                continue: 30
             })
         }
         fetch(pokemonListContinue)
             .then(res => res.json())
             .then(
                 (data) => {
-                    console.log(data.results)
+                    //console.log(data.results)
                     dispatch({
                         type: 'LIST_TOTAL_POKEMON',
                         nextList: data.results,
@@ -83,29 +84,30 @@ const Home = () => {
 
                 }
             )
-      }, 500);
+      }, 200);
+
+      const onclickSet = () => (
+        dispatch({
+            type: 'STATUS_ONE_POKEMON',
+            display: false
+        })
+      )
 
     return (
         <div className='container'>
             <Router>
                 <Menu />
                 {displayOnePokemon && (
-                    <div className='text-center'><h2>Pokedex</h2>
+                    <div className='text-center mt-3'><h2>Pokedex</h2>
                         <div className="d-flex flex-wrap">
                             {pokemonList.map((pokemonList, i) => (
-                                <Link to={"/Pokemon/" + (i + ratio)} value={i} key={i} onClick={e => dispatch({
-                                    type: 'STATUS_ONE_POKEMON',
-                                    display: false
-                                })}>
+                                <Link to={"/Pokemon/" + (i + ratio)} value={i} key={i} onClick={onclickSet}>
                                     <PokemonList name={pokemonList.name} count={i + ratio} />
                                 </Link>
                             ))}
                             {pokemonListTotal.map((pokemonListNext, i) => (
                                 i < 838 ?
-                                <Link to={"/Pokemon/" + (total + i + ratio)} value={total + i} key={total + i} onClick={e => dispatch({
-                                    type: 'STATUS_ONE_POKEMON',
-                                    display: false
-                                })}>
+                                <Link to={"/Pokemon/" + (total + i + ratio)} value={total + i} key={total + i} onClick={onclickSet}>
                                     <PokemonList name={pokemonListNext.name} count={total + i + ratio} />
                                 </Link>
                                 : ''

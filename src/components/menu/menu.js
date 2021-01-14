@@ -16,23 +16,27 @@ const Menu = () => {
     }*/
 
     // les states dans le ReducerPokemonlist
-    const {displayOnePokemon } = useSelector(state => state.ReducerPokemonlist);
+    const {displayOnePokemon} = useSelector(state => state.ReducerPokemonlist);
     const dispatch = useDispatch();
+
+    const addPositionScroll = () => (
+        dispatch({
+            type: 'STATUS_ONE_POKEMON',
+            display: true
+        })
+    )
+
     return (
 
         <div>
-            <Link to={"/"} onClick={() => dispatch({
-                type: 'STATUS_ONE_POKEMON',
-                display: true
-            })}>
+            <Link to={"/"} onClick={addPositionScroll}>
                 <img src={'/pokeball.png'} className="App-logo" alt="logo" />
             </Link>
-            {!displayOnePokemon && (<Link className='ml-4' to={"/"} onClick={() => dispatch({
-                type: 'STATUS_ONE_POKEMON',
-                display: true
-            })}>back</Link>)}
+            {!displayOnePokemon && (<Link className='ml-4' to={"/"} onClick={addPositionScroll}>back</Link>)}
             {//<button onClick={test}>test </button>
             /*<div>{msg}</div>*/}
+
+            <div></div>
         </div>
 
     )
