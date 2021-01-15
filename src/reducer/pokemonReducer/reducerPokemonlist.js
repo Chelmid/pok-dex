@@ -11,10 +11,9 @@ const initialState = {
     total: totalInit,
     limite : limiteInit,
     apiPokemon: 'https://pokeapi.co/api/v2/pokemon?limit=' + totalInit,
-    displayOnePokemon: true,
+    displayList: true,
     pokemonListContinue: 'https://pokeapi.co/api/v2/pokemon/?limit=' + limiteInit + '&offset=' + totalInit,
     pokemonListTotal: [],
-    positionScroll : ''
 }
 
 let ReducerPokemonlist = (state = initialState, action = {}) => {
@@ -27,9 +26,9 @@ let ReducerPokemonlist = (state = initialState, action = {}) => {
             return { ...state, countPokemon: state.countPokemon.push(action.payload) }
 
         case 'STATUS_ONE_POKEMON':
-            console.log(state.displayOnePokemon)
+            console.log(state.displayList)
 
-            return { ...state, displayOnePokemon: action.display }
+            return { ...state, displayList: action.display }
 
         case 'COUNTER_POKEMON':
             console.log(state.countPokemon)

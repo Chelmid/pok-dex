@@ -9,6 +9,9 @@ import PokemonList from '../pokemon/pokemonList';
 import Pokemon from '../pokemon/pokemon';
 import Menu from '../menu/menu';
 
+import Login from '../connect/login'
+import Register from '../connect/register'
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -21,7 +24,7 @@ import debounce from "lodash.debounce";
 const Home = () => {
 
     //call des élements du initState dans le reducerListPokemon
-    const { apiPokemon, displayOnePokemon, pokemonListContinue, total, pokemonListTotal, positionScroll } = useSelector(state => state.ReducerPokemonlist);
+    const { apiPokemon, displayList, pokemonListContinue, total, pokemonListTotal } = useSelector(state => state.ReducerPokemonlist);
     const dispatch = useDispatch();
 
     //state tempo
@@ -34,34 +37,34 @@ const Home = () => {
 
     //construtor
     useEffect(() => {
+        if (displayList === true) {
+            fetch(apiPokemon)
+                .then(res => res.json())
+                .then(
+                    (data) => {
+                        setPokemonList(data.results);
+                        console.log(data.results)
+                        //insere donnes dans le inttstate
+                        dispatch({
+                            type: 'COUNTER_POKEMON',
+                            counter: [...data.results.keys()]
+                        })
+                    },
+                    // Note: it's important to handle errors here
+                    // instead of a catch() block so that we don't swallow
+                    // exceptions from actual bugs in components.
+                    (error) => {
 
-       fetch(apiPokemon)
-            .then(res => res.json())
-            .then(
-                (data) => {
-                    setPokemonList(data.results);
-                    console.log(data.results)
-                    //insere donnes dans le inttstate
-                    dispatch({
-                        type: 'COUNTER_POKEMON',
-                        counter: [...data.results.keys()]
-                    })
-                },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-                (error) => {
+                    }
+                )
+        }
+    }, [apiPokemon, dispatch, displayList])
 
-                }
-            )
-            document.documentElement.scrollTop = positionScroll
-    }, [apiPokemon, dispatch, positionScroll])
-    
     // debounce scrolling infini
-    
+
     window.onscroll = debounce(() => {
-        let scrollPourcentage  = document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight) * 100
-        if(scrollPourcentage > 50 ){
+        let scrollPourcentage = document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight) * 100
+        if (scrollPourcentage > 50) {
             dispatch({
                 type: 'LIST_CONTINUE_POKEMON',
                 continue: 30
@@ -84,21 +87,22 @@ const Home = () => {
 
                 }
             )
-      }, 200);
+    }, 200);
 
-      const onclickSet = () => (
+    const onclickSet = () => (
         dispatch({
             type: 'STATUS_ONE_POKEMON',
             display: false
         })
-      )
+    )
 
     return (
         <div className='container'>
             <Router>
                 <Menu />
-                {displayOnePokemon && (
-                    <div className='text-center mt-3'><h2>Pokedex</h2>
+
+                {displayList && (
+                    <div className='text-center mt-3'>{displayList && (<h2>Pokedex</h2>)}
                         <div className="d-flex flex-wrap">
                             {pokemonList.map((pokemonList, i) => (
                                 <Link to={"/Pokemon/" + (i + ratio)} value={i} key={i} onClick={onclickSet}>
@@ -107,16 +111,18 @@ const Home = () => {
                             ))}
                             {pokemonListTotal.map((pokemonListNext, i) => (
                                 i < 838 ?
-                                <Link to={"/Pokemon/" + (total + i + ratio)} value={total + i} key={total + i} onClick={onclickSet}>
-                                    <PokemonList name={pokemonListNext.name} count={total + i + ratio} />
-                                </Link>
-                                : ''
+                                    <Link to={"/Pokemon/" + (total + i + ratio)} value={total + i} key={total + i} onClick={onclickSet}>
+                                        <PokemonList name={pokemonListNext.name} count={total + i + ratio} />
+                                    </Link>
+                                    : ''
                             ))}
                         </div></div>)}
                 <Switch>
-                    {!displayOnePokemon && (
+                    {!displayList && (
                         <Route path="/Pokemon/:id" component={Pokemon} />
                     )}
+                        <Route path="/login" component={Login} />
+                        <Route path="/register" component={Register} />
                 </Switch>
             </Router>
         </div>

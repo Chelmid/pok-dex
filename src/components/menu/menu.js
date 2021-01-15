@@ -16,27 +16,43 @@ const Menu = () => {
     }*/
 
     // les states dans le ReducerPokemonlist
-    const {displayOnePokemon} = useSelector(state => state.ReducerPokemonlist);
+    const { displayList } = useSelector(state => state.ReducerPokemonlist);
     const dispatch = useDispatch();
 
-    const addPositionScroll = () => (
+    const onclickSetOn = () => (
         dispatch({
             type: 'STATUS_ONE_POKEMON',
             display: true
         })
     )
 
+    const onclickSetOff = () => (
+        dispatch({
+            type: 'STATUS_ONE_POKEMON',
+            display: false
+        })
+      )
+
     return (
 
-        <div>
-            <Link to={"/"} onClick={addPositionScroll}>
+        <div className='d-flex'>
+            <Link to={"/"} onClick={onclickSetOn}>
                 <img src={'/pokeball.png'} className="App-logo" alt="logo" />
             </Link>
-            {!displayOnePokemon && (<Link className='ml-4' to={"/"} onClick={addPositionScroll}>back</Link>)}
+            {!displayList && (<Link className='ml-4' to={"/"} onClick={onclickSetOn}>back</Link>)}
             {//<button onClick={test}>test </button>
             /*<div>{msg}</div>*/}
 
-            <div></div>
+            <div className="col text-right">
+                <div className='d-flex justify-content-end'>
+                    <Link to={"/register"} >
+                        <div className='mr-3'onClick={onclickSetOff} >Register</div>
+                    </Link>
+                    <Link to={"/login"} >
+                        <div className='mr-3' onClick={onclickSetOff}>Login</div>
+                    </Link>
+                </div>
+            </div>
         </div>
 
     )
