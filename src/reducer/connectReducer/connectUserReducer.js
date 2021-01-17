@@ -1,6 +1,7 @@
 const initialState = {
     
-    displayPageSign: true,
+    connect: true,
+    message : '',
 
 }
 
@@ -8,10 +9,10 @@ let ConnectUserReducer = (state = initialState, action = {}) => {
 
     switch (action.type) {
 
-        case 'INIT_LIST':
-            console.log(state.pageSign)
+        case 'CONNECT':
+            console.log(state.connection)
 
-            return { ...state, displayPageSign: action.pageSign }
+            return { ...state, connect: action.connection }
 
         default:
             return state;

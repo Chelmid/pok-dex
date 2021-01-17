@@ -2,7 +2,7 @@ import React from 'react';
 
 const Register = () => {
 
-    const handleSubmit = () => (
+    const handleSubmitRegister = () => (
         console.log('click')
     )
 
@@ -11,7 +11,7 @@ const Register = () => {
         <div>
             <h2>Register</h2>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmitRegister}>
                 <label>
                     Your Email:
                     <input type="text" name="email" />
@@ -24,7 +24,7 @@ const Register = () => {
                     Your Name:
                     <input type="password" name="pwd" />
                 </label>
-                <button type="submit">Valider</button>
+                <button type="submit">Register</button>
             </form>
         </div>
 

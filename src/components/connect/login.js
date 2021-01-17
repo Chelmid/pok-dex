@@ -2,7 +2,7 @@ import React from 'react';
 
 const login = () => {
     
-    const handleSubmit = () => (
+    const handleSubmitConnect = () => (
         console.log('click')
     )
 
@@ -11,7 +11,7 @@ const login = () => {
         <div>
             <h2>Login</h2>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmitConnect}>
                 <label>
                     Your Email:
                     <input type="text" name="email" />
@@ -21,7 +21,7 @@ const login = () => {
                     <input type="text" name="name" />
                 </label>
                 
-                <button type="submit">Valider</button>
+                <button type="submit">Connect</button>
             </form>
         </div>
 
