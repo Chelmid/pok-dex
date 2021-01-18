@@ -1,28 +1,108 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // on va se connecter au store pour lire le state
-
 import {
-    useParams
+    Link,
 } from "react-router-dom";
+import debounce from "lodash.debounce";
+import { useDispatch, useSelector } from 'react-redux';
 
-const PokemonList = (props) => {
+const PokemonList = () => {
 
     // props qui vient de home
-    const pokemon = props
+    const { apiPokemon, displayList, pokemonListContinue, total, pokemonListTotal } = useSelector(state => state.ReducerPokemonlist);
+    const [pokemonList, setPokemonList] = useState([])
+    console.log(total)
 
+    const onclickSet = () => (
+        dispatch({
+            type: 'STATUS_ONE_POKEMON',
+            display: false
+        })
+    )
     //recupere url parametre
-    let { id } = useParams();
+    const dispatch = useDispatch();
+    let ratio = 1
+
+    //construtor
+    useEffect(() => {
+        if (displayList === true) {
+            fetch(apiPokemon)
+                .then(res => res.json())
+                .then(
+                    (data) => {
+                        setPokemonList(data.results);
+                        console.log(data.results)
+                        //insere donnes dans le inttstate
+                        dispatch({
+                            type: 'COUNTER_POKEMON',
+                            counter: [...data.results.keys()]
+                        })
+                    },
+                    // Note: it's important to handle errors here
+                    // instead of a catch() block so that we don't swallow
+                    // exceptions from actual bugs in components.
+                    (error) => {
+
+                    }
+                )
+        }
+    }, [apiPokemon, dispatch, displayList])
+
+    // debounce scrolling infini
+
+    window.onscroll = debounce(() => {
+        let scrollPourcentage = document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight) * 100
+        if (scrollPourcentage > 50) {
+            dispatch({
+                type: 'LIST_CONTINUE_POKEMON',
+                continue: 30
+            })
+        }
+        fetch(pokemonListContinue)
+            .then(res => res.json())
+            .then(
+                (data) => {
+                    //console.log(data.results)
+                    dispatch({
+                        type: 'LIST_TOTAL_POKEMON',
+                        nextList: data.results,
+                    })
+                },
+                // Note: it's important to handle errors here
+                // instead of a catch() block so that we don't swallow
+                // exceptions from actual bugs in components.
+                (error) => {
+
+                }
+            )
+    }, 200);
 
     return (
         <div>
-            <div className="pokemon">
-                <li className="text-center"> <img src={'/pokeball.png'} className="App-logo-list" alt="logo" /> N° {pokemon.count || id}</li>
-                <div className="text-center">
-                    <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + (pokemon.count !== undefined ? pokemon.count : id) + '.png'} alt='' />
-                </div>
-                <li className="text-center capitalize">{pokemon.name}</li>
-            </div>
-        </div>
+            <div className='text-center mt-3'><h2>Pokedex</h2>
+                <div className="d-flex flex-wrap ">
+                    <div className="d-flex flex-wrap">
+                        {pokemonList.map((pokemonList, i) => (
+                            <Link to={"/Pokemon/" + (i + ratio)} value={i} key={i} onClick={onclickSet} className='pokemon'>
+                                <li className="text-center"> <img src={'/pokeball.png'} className="App-logo-list" alt="logo" /> N° {(i + ratio)}</li>
+                                <div className="text-center">
+                                    <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + (i + ratio) + '.png'} alt='' />
+                                </div>
+                                <li className="text-center capitalize">{pokemonList.name}</li>
+                            </Link>
+                        ))}</div>
+                    {pokemonListTotal.map((pokemonListNext, i) => (
+                        ratio < 838 ?
+                            <Link to={"/Pokemon/" + (total + ratio + i)} value={total + ratio + i} key={total + ratio + i} onClick={onclickSet} className='pokemon'>
+                                <li className="text-center"> <img src={'/pokeball.png'} className="App-logo-list" alt="logo" /> N° {(total + ratio + i)}</li>
+                                <div className="text-center">
+                                    <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + (total + ratio + i) + '.png'} alt='' />
+                                </div>
+                                <li className="text-center capitalize">{pokemonListNext.name}</li>
+                            </Link>
+                            : ''
+                    ))}
+                </div></div></div>
     )
 }
 

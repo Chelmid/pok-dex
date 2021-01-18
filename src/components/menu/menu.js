@@ -45,6 +45,9 @@ const Menu = () => {
 
             <div className="col text-right">
                 <div className='d-flex justify-content-end'>
+                    <Link to={"/pokemon/list"} >
+                        <div className='mr-3'   onClick={onclickSetOn} >List</div>
+                    </Link>
                     <Link to={"/register"} >
                         <div className='mr-3'onClick={onclickSetOff} >Register</div>
                     </Link>
