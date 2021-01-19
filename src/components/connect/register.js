@@ -11,12 +11,14 @@ const Register = () => {
     const handleSubmitRegister = (e) => (
         e.preventDefault(),
         console.log(email),
-        console.log(pwd)
-        /*axios.post(`https:/register/users`, { user })
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-            })*/
+        console.log(pwd),
+        axios({
+            method: 'post',
+            url: 'http://localhost:3000/register',
+            data: {
+                email : email
+            }
+        })
     )
 
     const seePwd = () => (

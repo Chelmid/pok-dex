@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const port = 4000
-
+var router = express.Router();
 // require pour la connexion
 const connect = require('./ConnectDatabase')
 const mongoose = require('mongoose');
@@ -26,6 +26,13 @@ if (mongoose.connection.readyState === 2) {
         res.redirect('/error')
     })
 };
+
+router.use(function timeLog(req, res, next) {
+    console.log('Time: ', Date.now());
+    //autorisation pour le front a acceder au données
+    res.setHeader('Access-Control-Allow-Origin','http://localhost:3000')
+    next();
+  });
 
 app.get('/api/message', (req, res) => {
     res.send({
@@ -54,16 +61,10 @@ app.get('/sucessConnection', (req, res) => {
 })
 
 
-axios.post('/register/users', {
-    email: 'Fred',
-    name: 'Flintstone'
-  })
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+app.post('/register', (req, res) => {
+    console.log(req.body.email)
+    res.send('succezs')
+})
 
 //connection du serveur dnas le port 4000
 app.listen(port, () => {

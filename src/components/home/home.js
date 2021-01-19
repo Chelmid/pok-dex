@@ -29,7 +29,7 @@ const Home = () => {
                 <Menu />
 
                 {!displayList && (
-
+                    
                     <div>home</div>)}
                 <Switch>
                     {!displayList && (

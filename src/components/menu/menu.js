@@ -39,7 +39,7 @@ const Menu = () => {
             <Link to={"/"} onClick={onclickSetOn}>
                 <img src={'/pokeball.png'} className="App-logo" alt="logo" />
             </Link>
-            {!displayList && (<Link className='ml-4' to={"/"} onClick={onclickSetOn}>back</Link>)}
+            {!displayList && (<Link className='ml-4' to={"/pokemon/list"} onClick={onclickSetOn}>back</Link>)}
             {//<button onClick={test}>test </button>
             /*<div>{msg}</div>*/}
 
