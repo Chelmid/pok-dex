@@ -21,16 +21,19 @@ import {
 const Home = () => {
 
     //call des élements du initState dans le reducerListPokemon
-    const { displayList } = useSelector(state => state.ReducerPokemonlist);
+    const { displayList, pokedex } = useSelector(state => state.ReducerPokemonlist);
 
     return (
         <div className='container'>
             <Router>
                 <Menu />
 
-                {!displayList && (
+                {pokedex && (
                     
-                    <div>home</div>)}
+                    <div className='pokedex' >
+                        <img src={'/pokedex.gif'} style={{width : '100%'}} alt='pokedex' />
+                    </div>
+                    )}
                 <Switch>
                     {!displayList && (
                         <Route path="/Pokemon/:id" component={Pokemon} />

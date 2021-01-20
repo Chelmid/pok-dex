@@ -86,13 +86,13 @@ const PokemonList = () => {
                             <Link to={"/Pokemon/" + (i + ratio)} value={i} key={i} onClick={onclickSet} className='pokemon'>
                                 <li className="text-center"> <img src={'/pokeball.png'} className="App-logo-list" alt="logo" /> N° {(i + ratio)}</li>
                                 <div className="text-center">
-                                    <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + (i + ratio) + '.png'} alt='' />
+                                    <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + (i + ratio) + '.png'} alt='img' />
                                 </div>
                                 <li className="text-center capitalize">{pokemonList.name}</li>
                             </Link>
                         ))}</div>
                     {pokemonListTotal.map((pokemonListNext, i) => (
-                        ratio < 838 ?
+                        i < 828 ?
                             <Link to={"/Pokemon/" + (total + ratio + i)} value={total + ratio + i} key={total + ratio + i} onClick={onclickSet} className='pokemon'>
                                 <li className="text-center"> <img src={'/pokeball.png'} className="App-logo-list" alt="logo" /> N° {(total + ratio + i)}</li>
                                 <div className="text-center">

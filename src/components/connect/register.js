@@ -16,7 +16,9 @@ const Register = () => {
             method: 'post',
             url: 'http://localhost:3000/register',
             data: {
-                email : email
+                email : email,
+                name : name,
+                password : pwd
             }
         })
     )
@@ -28,7 +30,7 @@ const Register = () => {
     return (
 
         <div>
-            <h2>Register</h2>
+            <h2 className='text-center' >Register</h2>
 
             <form onSubmit={handleSubmitRegister}>
                 <label>

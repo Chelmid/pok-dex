@@ -16,20 +16,30 @@ const Menu = () => {
     }*/
 
     // les states dans le ReducerPokemonlist
-    const { displayList } = useSelector(state => state.ReducerPokemonlist);
+    const { displayList, pokedex } = useSelector(state => state.ReducerPokemonlist);
     const dispatch = useDispatch();
 
     const onclickSetOn = () => (
         dispatch({
             type: 'STATUS_ONE_POKEMON',
-            display: true
+            display: true,
+            pokedex: true
         })
     )
 
     const onclickSetOff = () => (
         dispatch({
             type: 'STATUS_ONE_POKEMON',
-            display: false
+            display: false,
+            pokedex: true
+        })
+      )
+
+      const onclickSetPokedex = () => (
+        dispatch({
+            type: 'STATUS_ONE_POKEMON',
+            display: true,
+            pokedex: false
         })
       )
 
@@ -39,20 +49,20 @@ const Menu = () => {
             <Link to={"/"} onClick={onclickSetOn}>
                 <img src={'/pokeball.png'} className="App-logo" alt="logo" />
             </Link>
-            {!displayList && (<Link className='ml-4' to={"/pokemon/list"} onClick={onclickSetOn}>back</Link>)}
+            {!displayList && (<Link className='ml-4' to={"/pokemon/list"} onClick={onclickSetPokedex }>back</Link>)}
             {//<button onClick={test}>test </button>
             /*<div>{msg}</div>*/}
 
             <div className="col text-right">
                 <div className='d-flex justify-content-end'>
                     <Link to={"/pokemon/list"} >
-                        <div className='mr-3'   onClick={onclickSetOn} >List</div>
+                        <div className='mr-3'   onClick={onclickSetPokedex } >List</div>
                     </Link>
                     <Link to={"/register"} >
-                        <div className='mr-3'onClick={onclickSetOff} >Register</div>
+                        <div className='mr-3'onClick={onclickSetPokedex } >Register</div>
                     </Link>
                     <Link to={"/login"} >
-                        <div className='mr-3' onClick={onclickSetOff}>Login</div>
+                        <div className='mr-3' onClick={onclickSetPokedex }>Login</div>
                     </Link>
                 </div>
             </div>

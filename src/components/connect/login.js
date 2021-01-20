@@ -9,7 +9,7 @@ const login = () => {
     return (
 
         <div>
-            <h2>Login</h2>
+            <h2 className='text-center' >Login</h2>
 
             <form onSubmit={handleSubmitConnect}>
                 <label>

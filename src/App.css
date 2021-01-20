@@ -67,3 +67,8 @@ ul{
 .cusor {
   cursor: pointer;
 }
+
+.pokedex {
+  margin: auto;
+  width: 50%;
+}
