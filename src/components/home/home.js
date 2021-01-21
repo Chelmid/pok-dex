@@ -29,11 +29,11 @@ const Home = () => {
                 <Menu />
 
                 {pokedex && (
-                    
+
                     <div className='pokedex' >
-                        <img src={'/pokedex.gif'} style={{width : '100%'}} alt='pokedex' />
+                        <img src={'/pokedex.gif'} style={{ width: '100%' }} alt='pokedex' />
                     </div>
-                    )}
+                )}
                 <Switch>
                     {!displayList && (
                         <Route path="/Pokemon/:id" component={Pokemon} />

@@ -25,6 +25,11 @@ const PokemonList = () => {
 
     //construtor
     useEffect(() => {
+        dispatch({
+            type: 'STATUS_ONE_POKEMON',
+            display: true,
+            pokedex: false
+        })
         if (displayList === true) {
             fetch(apiPokemon)
                 .then(res => res.json())

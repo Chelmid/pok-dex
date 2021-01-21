@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-const login = () => {
-    
+import { useDispatch } from 'react-redux';
+
+const Login = () => {
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch({
+            type: 'STATUS_ONE_POKEMON',
+            display: true,
+            pokedex: false
+        })
+    }, [dispatch])
+
     const handleSubmitConnect = () => (
         console.log('click')
     )
@@ -20,11 +32,11 @@ const login = () => {
                     Your Name:
                     <input type="text" name="name" />
                 </label>
-                
+
                 <button type="submit">Connect</button>
             </form>
         </div>
 
     )
 }
-export default (login);
+export default (Login);

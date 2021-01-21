@@ -16,7 +16,7 @@ const Menu = () => {
     }*/
 
     // les states dans le ReducerPokemonlist
-    const { displayList, pokedex } = useSelector(state => state.ReducerPokemonlist);
+    const { displayList } = useSelector(state => state.ReducerPokemonlist);
     const dispatch = useDispatch();
 
     const onclickSetOn = () => (
@@ -26,15 +26,6 @@ const Menu = () => {
             pokedex: true
         })
     )
-
-    const onclickSetOff = () => (
-        dispatch({
-            type: 'STATUS_ONE_POKEMON',
-            display: false,
-            pokedex: true
-        })
-      )
-
       const onclickSetPokedex = () => (
         dispatch({
             type: 'STATUS_ONE_POKEMON',

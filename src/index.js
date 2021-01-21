@@ -8,10 +8,12 @@ import { createStore, combineReducers } from 'redux'
 
 import ReducerPokemonlist from './reducer/pokemonReducer/reducerPokemonlist'
 import ReducerPokemon from './reducer/pokemonReducer/reducerPokemon'
+import ConnectUserReducer from './reducer/connectReducer/connectUserReducer'
 
 const allReducers = combineReducers({
   ReducerPokemonlist : ReducerPokemonlist,
-  ReducerPokemon : ReducerPokemon
+  ReducerPokemon : ReducerPokemon,
+  ConnectUserReducer : ConnectUserReducer,
 })
 
 const store = createStore(allReducers)
