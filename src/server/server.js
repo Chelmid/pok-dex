@@ -5,6 +5,8 @@ var router = express.Router();
 // require pour la connexion
 const connect = require('./ConnectDatabase')
 const mongoose = require('mongoose');
+const axios = require('axios')
+
 
 app.use(express.json())
 
@@ -32,24 +34,6 @@ router.use(function timeLog(req, res, next) {
     next();
 });
 
-app.get('/api/message', (req, res) => {
-    res.send({
-        msg: 'le message est la',
-    })
-})
-
-
-app.get('/save', (req, res) => {
-    res.send('Hello World!')
-    const schema = new mongoose.Schema({ name: 'string', size: 'string' });
-    const User = mongoose.model('Tank', schema);
-    console.log(Tank)
-    Tank.create({ size: 'small' }, (err, small) => {
-        if (err) return handleError(err);
-        // saved!
-    });
-})
-
 app.post('/register', (req, res) => {
     //status de la connaxion du server
 
@@ -65,14 +49,26 @@ app.post('/register', (req, res) => {
 
         // find email si pas dans la base de données
         Users.findOne({ email: req.body.email }, function (err, docs) {
-            if (docs == null) {
+            if (docs === null) {
                 Users.create({ email: req.body.email, name: req.body.name, password: req.body.password }, (err, small) => {
                     if (err) return handleError(err);
                     // saved!
                 });
+                app.get('/register', (req, res) => {
+                    res.json({
+                        msg: 'compte est bien créee',
+                    })
+                })
+                console.log('vide')
             }
             else {
                 console.log("First function call : ", docs);
+                app.get('/register', (req, res) => {
+                    res.json({
+                        msg: 'compte deja',
+                    });
+                })
+                console.log('exitant')
             }
         });
 
