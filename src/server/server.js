@@ -6,8 +6,11 @@ var router = express.Router();
 const connect = require('./ConnectDatabase')
 const mongoose = require('mongoose');
 const axios = require('axios')
+const path = require("path");
 
 
+
+app.use(express.static("public"));
 app.use(express.json())
 
 //status de la connaxion du server
@@ -34,13 +37,26 @@ router.use(function timeLog(req, res, next) {
     next();
 });
 
+
+app.get("/", function (req, res) { 
+    res.sendFile(path.join(__dirname, "public", "index.html"));
+}); 
+
+app.get("/login", function (req, res) { 
+    res.send('login')
+});
+
+app.get("/register", function (req, res) { 
+    res.send('register')
+});
+
 app.post('/register', (req, res) => {
     //status de la connaxion du server
 
-    if (mongoose.connection.readyState === 1) {
+     //init models empty
+     mongoose.models = {}
 
-        //init models empty
-        mongoose.models = {}
+    if (mongoose.connection.readyState === 1) {
 
         //schema des fields
         const schema = new mongoose.Schema({ email: 'string', name: 'string', password: 'string' });
@@ -48,27 +64,17 @@ app.post('/register', (req, res) => {
         const Users = mongoose.model('Users', schema);
 
         // find email si pas dans la base de données
-        Users.findOne({ email: req.body.email }, function (err, docs) {
-            if (docs === null) {
+        Users.findOne({ email: req.body.email }).exec(function (err, docs) {
+            if (docs !== {}) {
+                return res.redirect('http://localhost:3000/login');
+                console.log('exitant');
+            }
+            else {
                 Users.create({ email: req.body.email, name: req.body.name, password: req.body.password }, (err, small) => {
                     if (err) return handleError(err);
                     // saved!
                 });
-                app.get('/register', (req, res) => {
-                    res.json({
-                        msg: 'compte est bien créee',
-                    })
-                })
-                console.log('vide')
-            }
-            else {
-                console.log("First function call : ", docs);
-                app.get('/register', (req, res) => {
-                    res.json({
-                        msg: 'compte deja',
-                    });
-                })
-                console.log('exitant')
+                console.log('vide');
             }
         });
 

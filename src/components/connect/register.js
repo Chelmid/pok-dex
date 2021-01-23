@@ -28,41 +28,23 @@ const Register = () => {
     /*const test = async () => {
         await fetch('/register').then((res) => res.json()).then(msg => setMsg(msg.msg))
     }*/
-    
-    console.log(msg)
-    
-    const handleSubmitRegister = async (e) => {
-        e.preventDefault()
-        if(email === '' || name === '' || pwd === ''){
-            setMessage('Veuillez rempli le champs')
-        }else{
-            axios({
-                method: 'post',
-                url: 'http://localhost:3000/register',
-                data: {
-                    email: email,
-                    name: name,
-                    password: pwd
-                }
-            })
 
-            await fetch('/register').then((res) => console.log(res.json()))
-        }
-    }
-        /*e.preventDefault(),
-        email === '' || name === '' || pwd === '' ?
-        setMessage('Veuillez rempli le champs')
-        :
-        axios({
-            method: 'post',
-            url: 'http://localhost:3000/register',
-            data: {
+    console.log(msg)
+
+    const handleSubmitRegister = (e) => {
+        e.preventDefault()
+        if (email === '' || name === '' || pwd === '') {
+            setMessage('Veuillez rempli le champs')
+        } else {
+            axios.post('http://localhost:3000/register', {
                 email: email,
                 name: name,
                 password: pwd
-            }
-        })
-    )*/
+            }).then(res => console.log(res))
+        }
+        
+        ///fetch('/register').then((res) => console.log(res))
+    }
 
     const seePwd = (e) => (
         seePassword === 'password' ?

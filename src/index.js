@@ -10,6 +10,7 @@ import ReducerPokemonlist from './reducer/pokemonReducer/reducerPokemonlist'
 import ReducerPokemon from './reducer/pokemonReducer/reducerPokemon'
 import ConnectUserReducer from './reducer/connectReducer/connectUserReducer'
 
+import { BrowserRouter } from 'react-router-dom';
 const allReducers = combineReducers({
   ReducerPokemonlist : ReducerPokemonlist,
   ReducerPokemon : ReducerPokemon,
@@ -21,7 +22,9 @@ const store = createStore(allReducers)
 ReactDOM.render(
   <Provider store={store}>
   <React.StrictMode>
+  <BrowserRouter>
     <App />
+  </BrowserRouter>
   </React.StrictMode>
   </Provider>,
   document.getElementById('root')
