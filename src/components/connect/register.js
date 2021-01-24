@@ -33,6 +33,7 @@ const Register = () => {
 
     const handleSubmitRegister = (e) => {
         e.preventDefault()
+        //controle des champs no empty
         if (email === '' || name === '' || pwd === '') {
             setMessage('Veuillez rempli le champs')
         } else {
