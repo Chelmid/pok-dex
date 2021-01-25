@@ -2,19 +2,25 @@ import React, { useEffect, useState } from 'react';
 
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from "react-router-dom";
 
 const Register = () => {
 
+    // useState
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
     const [pwd, setPwd] = useState('')
-
     const [message, setMessage] = useState('')
+    const [msg, setMsg] = useState('')
 
+    //reducer dispatch et state
     const { seePassword } = useSelector(state => state.ConnectUserReducer);
-
     const dispatch = useDispatch()
-    //console.log(seePassword)
+    
+    // hook redirection page
+    const history = useHistory();
+
+    //useEffet
     useEffect(() => {
         dispatch({
             type: 'STATUS_ONE_POKEMON',
@@ -23,8 +29,6 @@ const Register = () => {
         })
     }, [dispatch])
 
-    const [msg, setMsg] = useState('')
-
     /*const test = async () => {
         await fetch('/register').then((res) => res.json()).then(msg => setMsg(msg.msg))
     }*/
@@ -32,21 +36,23 @@ const Register = () => {
     console.log(msg)
 
     const handleSubmitRegister = (e) => {
+
         e.preventDefault()
         //controle des champs no empty
         if (email === '' || name === '' || pwd === '') {
             setMessage('Veuillez rempli le champs')
         } else {
-            axios.post('http://localhost:3000/register', {
+            axios.post('/register', {
                 email: email,
                 name: name,
                 password: pwd
-            }).then(res => console.log(res))
+            }).then(res => console.log(setMsg(res.data.data))/*history.push('/login')*/)
         }
         
         ///fetch('/register').then((res) => console.log(res))
     }
 
+    // hook voir le password
     const seePwd = (e) => (
         seePassword === 'password' ?
             dispatch({
@@ -66,7 +72,6 @@ const Register = () => {
 
 
             <div>{msg}</div>
-
             <form onSubmit={handleSubmitRegister} className='col-4' style={{ margin: ' auto' }}>
                 <h2 className='text-center' >Register</h2>
                 <label>

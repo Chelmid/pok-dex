@@ -30,6 +30,7 @@ app.use(express.json())
     })
 };*/
 
+// CORS permission
 router.use(function timeLog(req, res, next) {
     console.log('Time: ', Date.now());
     //autorisation pour le front a acceder au données
@@ -37,17 +38,18 @@ router.use(function timeLog(req, res, next) {
     next();
 });
 
+let test = ''
 
 app.get("/", function (req, res) { 
     res.sendFile(path.join(__dirname, "public", "index.html"));
 }); 
 
 app.get("/login", function (req, res) { 
-    res.send('login')
+    res.send({message : 'sucess'})
 });
 
 app.get("/register", function (req, res) { 
-    res.send('register')
+    res.send({message : 'compte déjà existant'})
 });
 
 app.post('/register', (req, res) => {
@@ -65,16 +67,19 @@ app.post('/register', (req, res) => {
 
         // find email si pas dans la base de données
         Users.findOne({ email: req.body.email }).exec(function (err, docs) {
-            if (docs !== {}) {
-                return res.redirect('http://localhost:3000/login');
-                console.log('exitant');
-            }
-            else {
+            if (docs == null) {
                 Users.create({ email: req.body.email, name: req.body.name, password: req.body.password }, (err, small) => {
                     if (err) return handleError(err);
                     // saved!
                 });
+                console.log(docs);
                 console.log('vide');
+                res.redirect('/login');
+            }
+            else {
+                console.log(docs);
+                console.log('exitant');
+                res.redirect('/register');
             }
         });
 
