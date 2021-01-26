@@ -45,15 +45,15 @@ app.get("/", function (req, res) {
 }); 
 
 app.get("/login", function (req, res) { 
-    res.send({message : 'sucess'})
+    res.send({ message : 'compte crée' })
 });
 
 app.get("/register", function (req, res) { 
-    res.send({message : 'compte déjà existant'})
+    res.send({ message : 'compte déjà existant' })
 });
 
 app.post('/register', (req, res) => {
-    //status de la connaxion du server
+    //status de la connexion du server
 
      //init models empty
      mongoose.models = {}

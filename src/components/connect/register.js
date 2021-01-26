@@ -16,7 +16,7 @@ const Register = () => {
     //reducer dispatch et state
     const { seePassword } = useSelector(state => state.ConnectUserReducer);
     const dispatch = useDispatch()
-    
+
     // hook redirection page
     const history = useHistory();
 
@@ -33,8 +33,6 @@ const Register = () => {
         await fetch('/register').then((res) => res.json()).then(msg => setMsg(msg.msg))
     }*/
 
-    console.log(msg)
-
     const handleSubmitRegister = (e) => {
 
         e.preventDefault()
@@ -46,9 +44,9 @@ const Register = () => {
                 email: email,
                 name: name,
                 password: pwd
-            }).then(res => console.log(setMsg(res.data.data))/*history.push('/login')*/)
+            }).then(res => setMsg(res.data.message)/*history.push('/login')*/)
         }
-        
+
         ///fetch('/register').then((res) => console.log(res))
     }
 
@@ -69,29 +67,32 @@ const Register = () => {
     return (
 
         <div>
-
-
-            <div>{msg}</div>
-            <form onSubmit={handleSubmitRegister} className='col-4' style={{ margin: ' auto' }}>
+            <form onSubmit={handleSubmitRegister} className='col-md-4' style={{ margin: ' auto' }}>
                 <h2 className='text-center' >Register</h2>
-                <label>
-                    Your Email :
+                <div className='text-center'>{msg}</div>
+                <div className='col-md-6' style={{ margin: ' auto' }}>
                     <div>{email.length === 0 && message}</div>
-                    <input type="text" name="email" onChange={e => setEmail(e.target.value)} />
-                </label>
-                <label>
-                    Your Name :
+                    <label>
+                        Your Email :
+                    <input type="email" name="email" className='col-auto' onChange={e => setEmail(e.target.value)} required/>
+                    </label>
                     <div>{name.length === 0 && message}</div>
-                    <input type="text" name="name" onChange={e => setName(e.target.value)} />
-                </label>
-                <label>
-                    Your Password :
+                    <label>
+                        Your Name :
+                    <input type="text" name="name" className='col-auto' onChange={e => setName(e.target.value)} />
+                    </label>
                     <div>{pwd.length === 0 && message}</div>
-                    <input type={seePassword} name="pwd" onChange={e => setPwd(e.target.value)} />
-                    <img src={'/master_ball.jpg'} className="App-logo-list cusor" alt="logo" onClick={seePwd} />
-                </label>
-                <div>
-                    <button type="submit">Register</button>
+                    <label>
+                        Your Password :
+                        <div className='d-flex'>
+                            <input type={seePassword} name="pwd" className='col-auto' onChange={e => setPwd(e.target.value)} />
+                            <img src={'/master_ball.jpg'} className="App-logo-list cusor" alt="logo" onClick={seePwd} />
+                        </div>
+                    </label>
+
+                    <div className='col-md-6' style={{ margin: ' auto' }}>
+                        <button type="submit">Register</button>
+                    </div>
                 </div>
             </form>
         </div>
