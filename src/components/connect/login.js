@@ -9,6 +9,7 @@ const Login = () => {
     const [pwd, setPwd] = useState('')
     const [message, setMessage] = useState('')
     const [msg, setMsg] = useState('')
+    const [borderError, setBorderError] = useState('')
 
     //reducer dispatch et state
     const { seePassword } = useSelector(state => state.ConnectUserReducer);
@@ -22,9 +23,21 @@ const Login = () => {
         })
     }, [dispatch])
 
-    const handleSubmitConnect = () => (
-        console.log('click')
-    )
+    const handleSubmitConnect = (e) => {
+        e.preventDefault()
+        if (email.length >= 4 && pwd.length >= 5) {
+            /*axios.post('/login', {
+                email: email,
+                password: pwd
+            }).then(res => setMsg(res.data.message)/*history.push('/login')*///)
+            setMessage('')
+        } else {
+            if (pwd.length <= 5) {
+                setMessage('Veuillez remplir avec plus de 5 charateres')
+                setBorderError('borderError')
+            }
+        }
+    }
 
     // hook voir le password
     const seePwd = (e) => (
@@ -46,20 +59,32 @@ const Login = () => {
             <form onSubmit={handleSubmitConnect} className='col-4' style={{ margin: ' auto' }}>
                 <h2 className='text-center' >Login</h2>
                 <div className='text-center'>{msg}</div>
-                <div className='col-md-6' style={{ margin: ' auto' }}>
-                    <div>{email.length === 0 && message}</div>
-                    <label>
+                <div style={{ display: ' grid' }}>
+
+                    <label className='center'>
                         Your Email :
-                        <input type="email" name="email" className='col-auto' onChange={e => setEmail(e.target.value)} />
+                        <div className='center'>
+                            {email.length <= 4 && borderError ?
+                                <input className={borderError} type="email" name="email" onChange={e => setEmail(e.target.value)} required /> :
+                                <input type="email" name="email" onChange={e => setEmail(e.target.value)} required />
+                            }
+                        </div>
                     </label>
-                    <label>
+                    <div className='message-error'>{email.length <= 4 && message}</div>
+
+                    <label className='center' style={{ paddingLeft: '20px' }}>
                         Your Password :
                         <div className='d-flex'>
-                            <input type={seePassword} name="pwd" className='col-auto' onChange={e => setPwd(e.target.value)} />
+                            {pwd.length <= 4 && borderError ?
+                                <input type={seePassword} className={borderError} name="pwd" onChange={e => setPwd(e.target.value)} /> :
+                                <input type={seePassword} name="pwd" onChange={e => setPwd(e.target.value)} />
+                            }
                             <img src={'/master_ball.jpg'} className="App-logo-list cusor" alt="logo" onClick={seePwd} />
                         </div>
                     </label>
-                    <div className='col-md-6' style={{ margin: ' auto' }}>
+                    <div className='message-error'>{pwd.length <= 4 && message}</div>
+
+                    <div style={{ margin: ' auto' }}>
                         <button type="submit">Connect</button>
                     </div>
                 </div>

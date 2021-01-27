@@ -72,3 +72,16 @@ ul{
   margin: auto;
   width: 50%;
 }
+
+.center {
+  margin: auto;
+}
+
+.message-error {
+  color: red;
+  margin: auto;
+}
+
+.borderError {
+  border: 1px solid red;
+}

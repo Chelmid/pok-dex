@@ -12,6 +12,7 @@ const Register = () => {
     const [pwd, setPwd] = useState('')
     const [message, setMessage] = useState('')
     const [msg, setMsg] = useState('')
+    const [borderError, setBorderError] = useState('')
 
     //reducer dispatch et state
     const { seePassword } = useSelector(state => state.ConnectUserReducer);
@@ -37,14 +38,19 @@ const Register = () => {
 
         e.preventDefault()
         //controle des champs no empty
-        if (email === '' || name === '' || pwd === '') {
-            setMessage('Veuillez rempli le champs')
-        } else {
+
+        if (email.length >= 4 && name.length >= 5 && pwd.length >= 5) {
             axios.post('/register', {
                 email: email,
                 name: name,
                 password: pwd
             }).then(res => setMsg(res.data.message)/*history.push('/login')*/)
+            setMessage('')
+        } else {
+            if (name.length <= 5 || pwd.length <= 5) {
+                setMessage('Veuillez remplir avec plus de 5 charateres')
+                setBorderError('borderError')
+            }
         }
 
         ///fetch('/register').then((res) => console.log(res))
@@ -67,30 +73,46 @@ const Register = () => {
     return (
 
         <div>
-            <form onSubmit={handleSubmitRegister} className='col-md-4' style={{ margin: ' auto' }}>
+            <form onSubmit={handleSubmitRegister}>
                 <h2 className='text-center' >Register</h2>
                 <div className='text-center'>{msg}</div>
-                <div className='col-md-6' style={{ margin: ' auto' }}>
-                    <div>{email.length === 0 && message}</div>
-                    <label>
+                <div style={{ display: ' grid' }}>
+
+                    <label className='center'>
                         Your Email :
-                    <input type="email" name="email" className='col-auto' onChange={e => setEmail(e.target.value)} required/>
+                        <div className='center'>
+                            {email.length <= 4 && borderError ?
+                                <input className={borderError} type="email" name="email" onChange={e => setEmail(e.target.value)} required /> :
+                                <input type="email" name="email" onChange={e => setEmail(e.target.value)} required />
+                            }
+                        </div>
                     </label>
-                    <div>{name.length === 0 && message}</div>
-                    <label>
+                    <div className='message-error'>{email.length <= 4 && message}</div>
+
+                    <label className='center'>
                         Your Name :
-                    <input type="text" name="name" className='col-auto' onChange={e => setName(e.target.value)} />
+                        <div className='center'>
+                            {name.length <= 4 && borderError ?
+                                <input className={borderError} type="text" name="name" onChange={e => setName(e.target.value)} /> :
+                                <input type="text" name="name" onChange={e => setName(e.target.value)} />
+                            }
+                        </div>
                     </label>
-                    <div>{pwd.length === 0 && message}</div>
-                    <label>
+                    <div className='message-error'>{name.length <= 4 && message}</div>
+
+                    <label className='center' style={{ paddingLeft: '20px' }}>
                         Your Password :
                         <div className='d-flex'>
-                            <input type={seePassword} name="pwd" className='col-auto' onChange={e => setPwd(e.target.value)} />
+                            {pwd.length <= 4 && borderError ?
+                                <input type={seePassword} className={borderError} name="pwd" onChange={e => setPwd(e.target.value)} /> :
+                                <input type={seePassword} name="pwd" onChange={e => setPwd(e.target.value)} />
+                            }
                             <img src={'/master_ball.jpg'} className="App-logo-list cusor" alt="logo" onClick={seePwd} />
                         </div>
                     </label>
+                    <div className='message-error'>{pwd.length <= 4 && message}</div>
 
-                    <div className='col-md-6' style={{ margin: ' auto' }}>
+                    <div style={{ margin: ' auto' }}>
                         <button type="submit">Register</button>
                     </div>
                 </div>

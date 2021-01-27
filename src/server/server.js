@@ -38,17 +38,19 @@ router.use(function timeLog(req, res, next) {
     next();
 });
 
-let test = ''
-
-app.get("/", function (req, res) { 
+app.get("/", (req, res) => { 
     res.sendFile(path.join(__dirname, "public", "index.html"));
 }); 
 
-app.get("/login", function (req, res) { 
+app.get("/login", (req, res) => { 
     res.send({ message : 'compte crée' })
 });
 
-app.get("/register", function (req, res) { 
+app.post("/login", (req, res) => {
+
+})
+
+app.get("/register", (req, res) => { 
     res.send({ message : 'compte déjà existant' })
 });
 
@@ -66,7 +68,7 @@ app.post('/register', (req, res) => {
         const Users = mongoose.model('Users', schema);
 
         // find email si pas dans la base de données
-        Users.findOne({ email: req.body.email }).exec(function (err, docs) {
+        Users.findOne({ email: req.body.email }).exec( (err, docs) => {
             if (docs == null) {
                 Users.create({ email: req.body.email, name: req.body.name, password: req.body.password }, (err, small) => {
                     if (err) return handleError(err);
