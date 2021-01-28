@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
+import { useCookies } from 'react-cookie';
+import { useHistory } from "react-router-dom";
+import axios from 'axios';
+
 const Login = () => {
 
     // useState
@@ -10,10 +14,14 @@ const Login = () => {
     const [message, setMessage] = useState('')
     const [msg, setMsg] = useState('')
     const [borderError, setBorderError] = useState('')
+    const [cookies, setCookie] = useCookies(['cookie-name']);
 
     //reducer dispatch et state
     const { seePassword } = useSelector(state => state.ConnectUserReducer);
     const dispatch = useDispatch()
+
+    // hook redirection page
+    const history = useHistory();
 
     useEffect(() => {
         dispatch({
@@ -26,10 +34,25 @@ const Login = () => {
     const handleSubmitConnect = (e) => {
         e.preventDefault()
         if (email.length >= 4 && pwd.length >= 5) {
-            /*axios.post('/login', {
+            axios.post('/login', {
                 email: email,
                 password: pwd
-            }).then(res => setMsg(res.data.message)/*history.push('/login')*///)
+            }).then(res => {
+                console.log(res)
+                /*history.push('/login')*/
+                if( res.data.message === 'connecter' ){
+                    console.log('connecter')
+                    dispatch({
+                        type: 'CONNECT',
+                        connection: true
+                    })
+                    setCookie('connect',true)
+                    history.push('/pokemon/list')
+                }else{
+                    console.log('error')
+                    setMsg(res.data.message)
+                }
+            })
             setMessage('')
         } else {
             if (pwd.length <= 5) {

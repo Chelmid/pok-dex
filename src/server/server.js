@@ -8,27 +8,9 @@ const mongoose = require('mongoose');
 const axios = require('axios')
 const path = require("path");
 
-
-
+//use express
 app.use(express.static("public"));
 app.use(express.json())
-
-//status de la connaxion du server
-/*if (mongoose.connection.readyState === 2) {
-    console.log(mongoose.connection.readyState, 'connecting ...')
-    mongoose.connection.on('connected', () => {
-        console.log(mongoose.connection.readyState, 'connected ...')
-        app.get('/', (req, res) => {
-            res.redirect('/sucessConnection')
-        })
-
-    })
-} else {
-    console.log(mongoose.connection.readyState, 'disconnected ...')
-    app.get('/', (req, res) => {
-        res.redirect('/error')
-    })
-};*/
 
 // CORS permission
 router.use(function timeLog(req, res, next) {
@@ -38,20 +20,55 @@ router.use(function timeLog(req, res, next) {
     next();
 });
 
+//home
 app.get("/", (req, res) => { 
     res.sendFile(path.join(__dirname, "public", "index.html"));
 }); 
 
-app.get("/login", (req, res) => { 
-    res.send({ message : 'compte crée' })
+
+//login 
+app.get("/login/success", (req, res) => { 
+    res.send({ message : 'connecter' })
+});
+
+app.get("/login/error", (req, res) => { 
+    res.send({ message : 'adresse mail ou mot de passe incorrect' })
 });
 
 app.post("/login", (req, res) => {
+         //init models empty
+         mongoose.models = {}
 
+         if (mongoose.connection.readyState === 1) {
+            
+             //schema des fields
+             const schema = new mongoose.Schema({ email: 'string', name: 'string', password: 'string' });
+             // selection des du models et fields
+             const Users = mongoose.model('Users', schema);
+     
+             // find email si pas dans la base de données
+             Users.findOne({ email: req.body.email, password: req.body.password }).exec( (err, docs) => {
+                if(docs == null){
+                    console.log(docs)
+                    res.redirect('/login/error');
+                }else{
+                    console.log(docs)
+                    res.redirect('/login/success');
+                }
+             });
+     
+         } else {
+             console.log('error')
+         }
 })
 
-app.get("/register", (req, res) => { 
+// register
+app.get("/register/error", (req, res) => { 
     res.send({ message : 'compte déjà existant' })
+});
+
+app.get("/register/success", (req, res) => { 
+    res.send({ message : 'compte crée' })
 });
 
 app.post('/register', (req, res) => {
@@ -63,25 +80,25 @@ app.post('/register', (req, res) => {
     if (mongoose.connection.readyState === 1) {
 
         //schema des fields
-        const schema = new mongoose.Schema({ email: 'string', name: 'string', password: 'string' });
+        const schema = new mongoose.Schema({ email: 'string', name: 'string', password: 'string', pokemonTeam: 'object' });
         // selection des du models et fields
         const Users = mongoose.model('Users', schema);
 
         // find email si pas dans la base de données
         Users.findOne({ email: req.body.email }).exec( (err, docs) => {
             if (docs == null) {
-                Users.create({ email: req.body.email, name: req.body.name, password: req.body.password }, (err, small) => {
+                Users.create({ email: req.body.email, name: req.body.name, password: req.body.password, pokemonTeam: {"test" : 'string', "tests" : 'strings'} }, (err, small) => {
                     if (err) return handleError(err);
                     // saved!
                 });
                 console.log(docs);
                 console.log('vide');
-                res.redirect('/login');
+                res.redirect('/register/success');
             }
             else {
                 console.log(docs);
                 console.log('exitant');
-                res.redirect('/register');
+                res.redirect('/register/error');
             }
         });
 

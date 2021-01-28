@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from "react-router-dom";
 
 const Register = () => {
 
@@ -17,9 +16,6 @@ const Register = () => {
     //reducer dispatch et state
     const { seePassword } = useSelector(state => state.ConnectUserReducer);
     const dispatch = useDispatch()
-
-    // hook redirection page
-    const history = useHistory();
 
     //useEffet
     useEffect(() => {
