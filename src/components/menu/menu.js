@@ -36,6 +36,7 @@ const Menu = () => {
         }
     }, [dispatch])
 
+    //click home
     const onclickSetOn = () => (
         dispatch({
             type: 'STATUS_ONE_POKEMON',
@@ -43,6 +44,8 @@ const Menu = () => {
             pokedex: true
         })
     )
+
+    //click list
     const onclickSetPokedex = () => (
         dispatch({
             type: 'STATUS_ONE_POKEMON',
@@ -51,6 +54,7 @@ const Menu = () => {
         })
     )
 
+    //click logout
     const onclickLogout = () => (
         removeCookie('connect'),
         dispatch({

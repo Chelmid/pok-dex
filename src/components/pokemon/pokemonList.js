@@ -10,6 +10,7 @@ const PokemonList = () => {
 
     // props qui vient de home
     const { apiPokemon, displayList, pokemonListContinue, total, pokemonListTotal } = useSelector(state => state.ReducerPokemonlist);
+    const { connect } = useSelector(state => state.ConnectUserReducer);
     const [pokemonList, setPokemonList] = useState([])
     console.log(total)
 
@@ -84,30 +85,46 @@ const PokemonList = () => {
 
     return (
         <div>
-            <div className='text-center mt-3'><h2>Pokedex</h2>
-                <div className="d-flex flex-wrap ">
-                    <div className="d-flex flex-wrap">
-                        {pokemonList.map((pokemonList, i) => (
-                            <Link to={"/Pokemon/" + (i + ratio)} value={i} key={i} onClick={onclickSet} className='pokemon'>
-                                <li className="text-center"> <img src={'/pokeball.png'} className="App-logo-list" alt="logo" /> N° {(i + ratio)}</li>
-                                <div className="text-center">
-                                    <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + (i + ratio) + '.png'} alt='img' />
+            {connect &&
+                <div className='text-center mt-3'><h2>Pokedex</h2>
+                    <div className="d-flex flex-wrap ">
+                        <div className="d-flex flex-wrap">
+                            {pokemonList.map((pokemonList, i) => (
+                                <div className='pokemon'>
+                                    <Link to={"/Pokemon/" + (i + ratio)} value={i} key={i} onClick={onclickSet}>
+                                        <li className="text-center"> <img src={'/pokeball.png'} className="App-logo-list" alt="logo" /> N° {(i + ratio)}</li>
+                                        <div className="text-center">
+                                            <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + (i + ratio) + '.png'} alt='img' />
+                                        </div>
+                                        <li className="text-center capitalize">{pokemonList.name}</li>
+                                    </Link>
+                                    <div>
+                                        <button>ajouter</button>
+                                    </div>
                                 </div>
-                                <li className="text-center capitalize">{pokemonList.name}</li>
-                            </Link>
-                        ))}</div>
-                    {pokemonListTotal.map((pokemonListNext, i) => (
-                        i < 828 ?
-                            <Link to={"/Pokemon/" + (total + ratio + i)} value={total + ratio + i} key={total + ratio + i} onClick={onclickSet} className='pokemon'>
-                                <li className="text-center"> <img src={'/pokeball.png'} className="App-logo-list" alt="logo" /> N° {(total + ratio + i)}</li>
-                                <div className="text-center">
-                                    <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + (total + ratio + i) + '.png'} alt='' />
+                            ))}
+                        </div>
+                        {pokemonListTotal.map((pokemonListNext, i) => (
+                            i < 828 ?
+                                <div className='pokemon'>
+                                    <Link to={"/Pokemon/" + (total + ratio + i)} value={total + ratio + i} key={total + ratio + i} onClick={onclickSet}>
+                                        <li className="text-center"> <img src={'/pokeball.png'} className="App-logo-list" alt="logo" /> N° {(total + ratio + i)}</li>
+                                        <div className="text-center">
+                                            <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + (total + ratio + i) + '.png'} alt='' />
+                                        </div>
+                                        <li className="text-center capitalize">{pokemonListNext.name}</li>
+                                    </Link>
+                                    <div>
+                                        <button>ajouter</button>
+                                    </div>
                                 </div>
-                                <li className="text-center capitalize">{pokemonListNext.name}</li>
-                            </Link>
-                            : ''
-                    ))}
-                </div></div></div>
+                                : ''
+                        ))}
+                        <button>ajouter</button>
+                    </div>
+                </div>
+            }
+        </div>
     )
 }
 
