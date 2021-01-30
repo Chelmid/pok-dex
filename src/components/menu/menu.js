@@ -34,7 +34,7 @@ const Menu = () => {
                 connection: false
             })
         }
-    }, [dispatch])
+    }, [dispatch, cookies.connect])
 
     //click home
     const onclickSetOn = () => (

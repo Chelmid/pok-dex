@@ -3,7 +3,7 @@ const initialState = {
     connect: false,
     seePassword: 'password',
     message: '',
-    pokemonTeam: {}
+    pokemonTeams: { id: [] }
 
 }
 
@@ -21,7 +21,14 @@ let ConnectUserReducer = (state = initialState, action = {}) => {
 
             return { ...state, seePassword: action.showPassword }
 
-        case 'POKEMON_TEAM':
+        case 'POKEMON_TEAM_ADD':
+            console.log(state.pokemonTeams.id)
+            if(state.pokemonTeams.id.length < 6){
+                state.pokemonTeams.id.push(action.pokemonTeamAdd)
+            return { ...state, pokemonTeams: state.pokemonTeams }
+            }
+
+        case 'POKEMON_TEAM_REMOVE':
             console.log(state.pokemonTeam)
 
             return { ...state, pokemonTeam: action.showPassword }

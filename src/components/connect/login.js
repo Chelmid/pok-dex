@@ -14,7 +14,7 @@ const Login = () => {
     const [message, setMessage] = useState('')
     const [msg, setMsg] = useState('')
     const [borderError, setBorderError] = useState('')
-    const [cookies, setCookie] = useCookies(['cookie-name']);
+    const [, setCookie] = useCookies(['cookie-name']);
 
     //reducer dispatch et state
     const { seePassword } = useSelector(state => state.ConnectUserReducer);

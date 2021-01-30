@@ -10,7 +10,7 @@ const PokemonList = () => {
 
     // props qui vient de home
     const { apiPokemon, displayList, pokemonListContinue, total, pokemonListTotal } = useSelector(state => state.ReducerPokemonlist);
-    const { connect } = useSelector(state => state.ConnectUserReducer);
+    const { connect, pokemonTeams } = useSelector(state => state.ConnectUserReducer);
     const [pokemonList, setPokemonList] = useState([])
     console.log(total)
 
@@ -83,6 +83,19 @@ const PokemonList = () => {
             )
     }, 200);
 
+    //add pokemon in team
+    const onClickAddPokemonList = (i) => {
+        dispatch({
+            type: 'POKEMON_TEAM_ADD',
+            pokemonTeamAdd : i
+        })
+    }
+
+    //remove pokemon in team
+    const onClickRemovePokemonList = (i) => {
+        console.log('click')
+    }
+
     return (
         <div>
             {connect &&
@@ -90,24 +103,25 @@ const PokemonList = () => {
                     <div className="d-flex flex-wrap ">
                         <div className="d-flex flex-wrap">
                             {pokemonList.map((pokemonList, i) => (
-                                <div className='pokemon'>
-                                    <Link to={"/Pokemon/" + (i + ratio)} value={i} key={i} onClick={onclickSet}>
+                                <div className='pokemon' key={i}>
+                                    <Link to={"/Pokemon/" + (i + ratio)} value={i} onClick={onclickSet}>
                                         <li className="text-center"> <img src={'/pokeball.png'} className="App-logo-list" alt="logo" /> N° {(i + ratio)}</li>
                                         <div className="text-center">
                                             <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + (i + ratio) + '.png'} alt='img' />
                                         </div>
                                         <li className="text-center capitalize">{pokemonList.name}</li>
                                     </Link>
-                                    <div>
-                                        <button>ajouter</button>
-                                    </div>
+
+                                    {pokemonTeams.id.find((pokemonTeam) => (
+                                        i === pokemonTeam - ratio
+                                    )) !== undefined ? <button onClick={() => onClickRemovePokemonList(i + ratio) }>enlever</button>  : <button onClick={() => onClickAddPokemonList(i + ratio)}>ajouter</button>}
                                 </div>
                             ))}
                         </div>
                         {pokemonListTotal.map((pokemonListNext, i) => (
                             i < 828 ?
-                                <div className='pokemon'>
-                                    <Link to={"/Pokemon/" + (total + ratio + i)} value={total + ratio + i} key={total + ratio + i} onClick={onclickSet}>
+                                <div className='pokemon' key={total + ratio + i}>
+                                    <Link to={"/Pokemon/" + (total + ratio + i)} value={total + ratio + i} onClick={onclickSet}>
                                         <li className="text-center"> <img src={'/pokeball.png'} className="App-logo-list" alt="logo" /> N° {(total + ratio + i)}</li>
                                         <div className="text-center">
                                             <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + (total + ratio + i) + '.png'} alt='' />
