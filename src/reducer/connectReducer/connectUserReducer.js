@@ -26,6 +26,8 @@ let ConnectUserReducer = (state = initialState, action = {}) => {
             if(state.pokemonTeams.id.length < 6){
                 state.pokemonTeams.id.push(action.pokemonTeamAdd)
             return { ...state, pokemonTeams: state.pokemonTeams }
+            }else {
+                return {... state, message : 'La team est complète'}
             }
 
         case 'POKEMON_TEAM_REMOVE':

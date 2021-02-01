@@ -10,7 +10,7 @@ const PokemonList = () => {
 
     // props qui vient de home
     const { apiPokemon, displayList, pokemonListContinue, total, pokemonListTotal } = useSelector(state => state.ReducerPokemonlist);
-    const { connect, pokemonTeams } = useSelector(state => state.ConnectUserReducer);
+    const { connect, pokemonTeams, message } = useSelector(state => state.ConnectUserReducer);
     const [pokemonList, setPokemonList] = useState([])
     console.log(total)
 
@@ -87,12 +87,16 @@ const PokemonList = () => {
     const onClickAddPokemonList = (i) => {
         dispatch({
             type: 'POKEMON_TEAM_ADD',
-            pokemonTeamAdd : i
+            pokemonTeamAdd: i
         })
     }
 
     //remove pokemon in team
     const onClickRemovePokemonList = (i) => {
+        dispatch({
+            type: 'POKEMON_TEAM_REMOVE',
+            pokemonTeamRemove: i
+        })
         console.log('click')
     }
 
@@ -113,8 +117,11 @@ const PokemonList = () => {
                                     </Link>
 
                                     {pokemonTeams.id.find((pokemonTeam) => (
+                                        i === pokemonTeam - ratio)) ? <div>{message}</div> : ''
+                                    }
+                                    {pokemonTeams.id.find((pokemonTeam) => (
                                         i === pokemonTeam - ratio
-                                    )) !== undefined ? <button onClick={() => onClickRemovePokemonList(i + ratio) }>enlever</button>  : <button onClick={() => onClickAddPokemonList(i + ratio)}>ajouter</button>}
+                                    )) !== undefined ? <button onClick={() => onClickRemovePokemonList(i + ratio)}>enlever</button> : <button onClick={() => onClickAddPokemonList(i + ratio)}>ajouter</button>}
                                 </div>
                             ))}
                         </div>
