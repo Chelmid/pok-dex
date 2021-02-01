@@ -23,17 +23,24 @@ let ConnectUserReducer = (state = initialState, action = {}) => {
 
         case 'POKEMON_TEAM_ADD':
             console.log(state.pokemonTeams.id)
-            if(state.pokemonTeams.id.length < 6){
+            if (state.pokemonTeams.id.length < 6) {
                 state.pokemonTeams.id.push(action.pokemonTeamAdd)
-            return { ...state, pokemonTeams: state.pokemonTeams }
-            }else {
-                return {... state, message : 'La team est complète'}
-            }
+                return { ...state, pokemonTeams: state.pokemonTeams, message: 'le pokemon est ajouté dans votre équipe' }
+            }/* else {
+                return { ...state, message: 'La team est complète' }
+            }*/
 
         case 'POKEMON_TEAM_REMOVE':
-            console.log(state.pokemonTeam)
+            console.log(state.pokemonTeams)
 
-            return { ...state, pokemonTeam: action.showPassword }
+            state.pokemonTeams.id = state.pokemonTeams.id.filter((item) => action.pokemonTeamRemove !== item)
+            return { ...state, pokemonTeams: state.pokemonTeams }
+
+        case 'ONLOAD_POKEMONTEAMS' :
+            console.log(action.pokemonTeamOnload)
+            state.pokemonTeams = action.pokemonTeamOnload
+
+            return { ...state, pokemonTeams: state.pokemonTeams, message: 'le pokemon est ajouté dans votre équipe' }
 
         default:
             return state;

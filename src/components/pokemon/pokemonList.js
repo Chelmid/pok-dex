@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 // on va se connecter au store pour lire le state
-import {
-    Link,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 import debounce from "lodash.debounce";
 import { useDispatch, useSelector } from 'react-redux';
+import { useCookies } from 'react-cookie';
+import axios from 'axios';
 
 const PokemonList = () => {
 
@@ -13,6 +13,7 @@ const PokemonList = () => {
     const { connect, pokemonTeams, message } = useSelector(state => state.ConnectUserReducer);
     const [pokemonList, setPokemonList] = useState([])
     console.log(total)
+    const [cookies, setCookie] = useCookies(['cookie-name']);
 
     const onclickSet = () => (
         dispatch({
@@ -52,6 +53,13 @@ const PokemonList = () => {
                     }
                 )
         }
+        console.log(cookies.email)
+        if (cookies.email !== undefined) {
+            axios.post('/pokemon/list', {email: cookies.email}).then((response) => dispatch({
+                type: 'ONLOAD_POKEMONTEAMS',
+                pokemonTeamOnload: response.data
+            }))
+        }
     }, [apiPokemon, dispatch, displayList])
 
     // debounce scrolling infini
@@ -84,20 +92,31 @@ const PokemonList = () => {
     }, 200);
 
     //add pokemon in team
-    const onClickAddPokemonList = (i) => {
+    const onClickAddPokemonList = (i, e) => {
+        console.log(e)
+        e.preventDefault()
         dispatch({
             type: 'POKEMON_TEAM_ADD',
             pokemonTeamAdd: i
         })
+        axios.put('/pokemon/list/addTeam', {
+            email: cookies.email,
+            pokemonTeams: pokemonTeams
+        })
     }
 
     //remove pokemon in team
-    const onClickRemovePokemonList = (i) => {
+    const onClickRemovePokemonList = (i, e) => {
+        console.log(e)
+        e.preventDefault()
         dispatch({
             type: 'POKEMON_TEAM_REMOVE',
             pokemonTeamRemove: i
         })
-        console.log('click')
+        axios.put('/pokemon/list/addTeam', {
+            email: cookies.email,
+            pokemonTeams: pokemonTeams
+        })
     }
 
     return (
@@ -119,9 +138,11 @@ const PokemonList = () => {
                                     {pokemonTeams.id.find((pokemonTeam) => (
                                         i === pokemonTeam - ratio)) ? <div>{message}</div> : ''
                                     }
+
                                     {pokemonTeams.id.find((pokemonTeam) => (
                                         i === pokemonTeam - ratio
-                                    )) !== undefined ? <button onClick={() => onClickRemovePokemonList(i + ratio)}>enlever</button> : <button onClick={() => onClickAddPokemonList(i + ratio)}>ajouter</button>}
+                                    )) !== undefined ? <form onSubmit={(e) => onClickRemovePokemonList(i + ratio, e)}> <button name='pokemonTeams' >enlever</button></form> : <form onSubmit={(e) => onClickAddPokemonList(i + ratio, e)}><button name='pokemonTeams'>ajouter</button></form>}
+
                                 </div>
                             ))}
                         </div>
@@ -135,9 +156,13 @@ const PokemonList = () => {
                                         </div>
                                         <li className="text-center capitalize">{pokemonListNext.name}</li>
                                     </Link>
-                                    <div>
-                                        <button>ajouter</button>
-                                    </div>
+                                    {pokemonTeams.id.find((pokemonTeam) => (
+                                        i === pokemonTeam - ratio)) ? <div>{message}</div> : ''
+                                    }
+
+                                    {pokemonTeams.id.find((pokemonTeam) => (
+                                        i === pokemonTeam - ratio
+                                    )) !== undefined ? <form onSubmit={(e) => onClickRemovePokemonList(i + ratio, e)}> <button name='pokemonTeams' >enlever</button></form> : <form onSubmit={(e) => onClickAddPokemonList(i + ratio, e)}><button name='pokemonTeams'>ajouter</button></form>}
                                 </div>
                                 : ''
                         ))}

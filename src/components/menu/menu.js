@@ -57,6 +57,7 @@ const Menu = () => {
     //click logout
     const onclickLogout = () => (
         removeCookie('connect'),
+        removeCookie('email'),
         dispatch({
             type: 'CONNECT',
             connection: false

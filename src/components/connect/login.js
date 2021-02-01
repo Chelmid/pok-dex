@@ -47,6 +47,7 @@ const Login = () => {
                         connection: true
                     })
                     setCookie('connect',true)
+                    setCookie('email',email)
                     history.push('/pokemon/list')
                 }else{
                     console.log('error')
