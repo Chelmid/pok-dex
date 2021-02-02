@@ -5,6 +5,7 @@ import debounce from "lodash.debounce";
 import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
 const PokemonList = () => {
 
@@ -13,7 +14,10 @@ const PokemonList = () => {
     const { connect, pokemonTeams, message } = useSelector(state => state.ConnectUserReducer);
     const [pokemonList, setPokemonList] = useState([])
     console.log(total)
-    const [cookies, setCookie] = useCookies(['cookie-name']);
+    const [cookies, removeCookie] = useCookies(['cookie-name']);
+    const [msg, setMsg] = useState('')
+    const history = useHistory();
+
 
     const onclickSet = () => (
         dispatch({
@@ -55,10 +59,19 @@ const PokemonList = () => {
         }
         console.log(cookies.email)
         if (cookies.email !== undefined) {
-            axios.post('/pokemon/list', {email: cookies.email}).then((response) => dispatch({
+            axios.post('/pokemon/list', { email: cookies.email }).then((response) => dispatch({
                 type: 'ONLOAD_POKEMONTEAMS',
                 pokemonTeamOnload: response.data
-            }))
+            })).catch(error => {
+                if (error) {
+                    dispatch({
+                        type: 'CONNECT',
+                        connection: false
+                    })
+                    removeCookie('connect')
+                    history.push('/login')
+                }
+            })
         }
     }, [apiPokemon, dispatch, displayList])
 
@@ -102,7 +115,14 @@ const PokemonList = () => {
         axios.put('/pokemon/list/addTeam', {
             email: cookies.email,
             pokemonTeams: pokemonTeams
-        })
+        }).catch(error => {if (error) {
+            dispatch({
+                type: 'CONNECT',
+                connection: false
+            })
+            removeCookie('connect')
+            history.push('/login')
+        }})
     }
 
     //remove pokemon in team
@@ -116,7 +136,14 @@ const PokemonList = () => {
         axios.put('/pokemon/list/addTeam', {
             email: cookies.email,
             pokemonTeams: pokemonTeams
-        })
+        }).catch(error => {if (error) {
+            dispatch({
+                type: 'CONNECT',
+                connection: false
+            })
+            removeCookie('connect')
+            history.push('/login')
+        }})
     }
 
     return (
@@ -124,6 +151,7 @@ const PokemonList = () => {
             {connect &&
                 <div className='text-center mt-3'><h2>Pokedex</h2>
                     <div className="d-flex flex-wrap ">
+                        <div>{msg}</div>
                         <div className="d-flex flex-wrap">
                             {pokemonList.map((pokemonList, i) => (
                                 <div className='pokemon' key={i}>

@@ -40,7 +40,7 @@ const Register = () => {
                 email: email,
                 name: name,
                 password: pwd
-            }).then(res => setMsg(res.data.message)/*history.push('/login')*/)
+            }).then(res => setMsg(res.data.message)/*history.push('/login')*/).catch(error => setMsg('serveur erreur'))
             setMessage('')
         } else {
             if (name.length <= 5 || pwd.length <= 5) {

@@ -41,7 +41,7 @@ const Login = () => {
                 console.log(res)
                 /*history.push('/login')*/
                 if( res.data.message === 'connecter' ){
-                    console.log('connecter')
+                    console.log(res.data.message)
                     dispatch({
                         type: 'CONNECT',
                         connection: true
@@ -53,7 +53,7 @@ const Login = () => {
                     console.log('error')
                     setMsg(res.data.message)
                 }
-            })
+            }).catch(error => setMsg('server erreur'))
             setMessage('')
         } else {
             if (pwd.length <= 5) {
