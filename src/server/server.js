@@ -7,6 +7,7 @@ const connect = require('./ConnectDatabase')
 const mongoose = require('mongoose');
 const axios = require('axios')
 const path = require("path");
+const host = '0.0.0.0';
 
 //use express
 app.use(express.static("public"));
@@ -279,6 +280,6 @@ app.put('/pokemon/list/addCapture', (req, res) => {
 })
 
 //connection du serveur dnas le port 4000
-app.listen(port, () => {
+app.listen(port,host, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
