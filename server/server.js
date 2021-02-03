@@ -24,7 +24,7 @@ router.use(function timeLog(req, res, next) {
 
 //home
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/client/index.html");
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 });
 
 
