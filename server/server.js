@@ -23,7 +23,7 @@ router.use(function timeLog(req, res, next) {
 
 //home
 app.get("/", (req, res) => {
-    res.sendFile('index.html', { root: __dirname });
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 
