@@ -1,0 +1,102 @@
+.App {
+  /*text-align: center;*/
+}
+
+.App-logo {
+  height: 40vmin;
+  /*pointer-events: none;*/
+  margin-top: 10px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 5s linear;
+    animation-timing-function: cubic-bezier(0,0,0,0);
+    height: 60px;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+li {
+  list-style-type: none;
+}
+
+ul{
+  margin-left: -15px;
+}
+
+.pokemon {
+  height: auto;
+  width: 100px;
+  margin: 10px 10px 0 0;
+  padding: 0 0 0 0;
+  border: 1px solid black;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.App-logo-list {
+  height: 20px;
+}
+
+.cusor {
+  cursor: pointer;
+}
+
+.pokedex {
+  margin: auto;
+  width: 50%;
+}
+
+.center {
+  margin: auto;
+}
+
+.message-error {
+  color: red;
+  margin: auto;
+}
+
+.borderError {
+  border: 1px solid red;
+}
+
+/* ajouter remove pokemon*/
+.btnAjouter {
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  background-color: red;
+}
+
+.btnEnlever {
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  background-color: lightgreen;
+}
