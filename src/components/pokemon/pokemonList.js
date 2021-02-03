@@ -7,13 +7,15 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
 
+import PokemonCapture from './pokemonCapture'
+import PokemonTeam from './pokemonTeam'
+
 const PokemonList = () => {
 
     // props qui vient de home
     const { apiPokemon, displayList, pokemonListContinue, total, pokemonListTotal } = useSelector(state => state.ReducerPokemonlist);
-    const { connect, pokemonTeams, message } = useSelector(state => state.ConnectUserReducer);
+    const { connect} = useSelector(state => state.ConnectUserReducer);
     const [pokemonList, setPokemonList] = useState([])
-    console.log(total)
     const [cookies, removeCookie] = useCookies(['cookie-name']);
     const [msg, setMsg] = useState('')
     const history = useHistory();
@@ -59,10 +61,17 @@ const PokemonList = () => {
         }
         console.log(cookies.email)
         if (cookies.email !== undefined) {
-            axios.post('/pokemon/list', { email: cookies.email }).then((response) => dispatch({
-                type: 'ONLOAD_POKEMONTEAMS',
-                pokemonTeamOnload: response.data
-            })).catch(error => {
+            axios.post('/pokemon/list', { email: cookies.email }).then((response) => (
+            console.log(response),
+            dispatch({
+                type: 'ONLOAD_POKEMON_TEAMS',
+                pokemonTeamOnload: response.data.idTeam
+            }),
+            dispatch({
+                type: 'ONLOAD_POKEMON_CAPTURE',
+                pokemonCaptureOnload: response.data.idCapture
+            }))
+            ).catch(error => {
                 if (error) {
                     dispatch({
                         type: 'CONNECT',
@@ -73,7 +82,7 @@ const PokemonList = () => {
                 }
             })
         }
-    }, [apiPokemon, dispatch, displayList])
+    }, [apiPokemon, dispatch, displayList,cookies.email,history,removeCookie])
 
     // debounce scrolling infini
 
@@ -104,48 +113,6 @@ const PokemonList = () => {
             )
     }, 200);
 
-    //add pokemon in team
-    const onClickAddPokemonList = (i, e) => {
-        console.log(e)
-        e.preventDefault()
-        dispatch({
-            type: 'POKEMON_TEAM_ADD',
-            pokemonTeamAdd: i
-        })
-        axios.put('/pokemon/list/addTeam', {
-            email: cookies.email,
-            pokemonTeams: pokemonTeams
-        }).catch(error => {if (error) {
-            dispatch({
-                type: 'CONNECT',
-                connection: false
-            })
-            removeCookie('connect')
-            history.push('/login')
-        }})
-    }
-
-    //remove pokemon in team
-    const onClickRemovePokemonList = (i, e) => {
-        console.log(e)
-        e.preventDefault()
-        dispatch({
-            type: 'POKEMON_TEAM_REMOVE',
-            pokemonTeamRemove: i
-        })
-        axios.put('/pokemon/list/addTeam', {
-            email: cookies.email,
-            pokemonTeams: pokemonTeams
-        }).catch(error => {if (error) {
-            dispatch({
-                type: 'CONNECT',
-                connection: false
-            })
-            removeCookie('connect')
-            history.push('/login')
-        }})
-    }
-
     return (
         <div>
             {connect &&
@@ -154,6 +121,7 @@ const PokemonList = () => {
                         <div>{msg}</div>
                         <div className="d-flex flex-wrap">
                             {pokemonList.map((pokemonList, i) => (
+
                                 <div className='pokemon' key={i}>
                                     <Link to={"/Pokemon/" + (i + ratio)} value={i} onClick={onclickSet}>
                                         <li className="text-center"> <img src={'/pokeball.png'} className="App-logo-list" alt="logo" /> N° {(i + ratio)}</li>
@@ -162,39 +130,34 @@ const PokemonList = () => {
                                         </div>
                                         <li className="text-center capitalize">{pokemonList.name}</li>
                                     </Link>
-
-                                    {pokemonTeams.id.find((pokemonTeam) => (
-                                        i === pokemonTeam - ratio)) ? <div>{message}</div> : ''
-                                    }
-
-                                    {pokemonTeams.id.find((pokemonTeam) => (
-                                        i === pokemonTeam - ratio
-                                    )) !== undefined ? <form onSubmit={(e) => onClickRemovePokemonList(i + ratio, e)}> <button name='pokemonTeams' >enlever</button></form> : <form onSubmit={(e) => onClickAddPokemonList(i + ratio, e)}><button name='pokemonTeams'>ajouter</button></form>}
-
+                                    
+                                    <PokemonCapture id={(i)} ratio={(ratio)}/>
+                                    <PokemonTeam id={(i)} ratio={(ratio)}/>
+                                    
                                 </div>
                             ))}
-                        </div>
-                        {pokemonListTotal.map((pokemonListNext, i) => (
-                            i < 828 ?
-                                <div className='pokemon' key={total + ratio + i}>
-                                    <Link to={"/Pokemon/" + (total + ratio + i)} value={total + ratio + i} onClick={onclickSet}>
-                                        <li className="text-center"> <img src={'/pokeball.png'} className="App-logo-list" alt="logo" /> N° {(total + ratio + i)}</li>
-                                        <div className="text-center">
-                                            <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + (total + ratio + i) + '.png'} alt='' />
-                                        </div>
-                                        <li className="text-center capitalize">{pokemonListNext.name}</li>
-                                    </Link>
-                                    {pokemonTeams.id.find((pokemonTeam) => (
-                                        i === pokemonTeam - ratio)) ? <div>{message}</div> : ''
-                                    }
 
-                                    {pokemonTeams.id.find((pokemonTeam) => (
-                                        i === pokemonTeam - ratio
-                                    )) !== undefined ? <form onSubmit={(e) => onClickRemovePokemonList(i + ratio, e)}> <button name='pokemonTeams' >enlever</button></form> : <form onSubmit={(e) => onClickAddPokemonList(i + ratio, e)}><button name='pokemonTeams'>ajouter</button></form>}
-                                </div>
-                                : ''
-                        ))}
-                        <button>ajouter</button>
+                            {pokemonListTotal.map((pokemonListNext, i) => (
+                                i < 828 ?
+                                    <div className='pokemon' key={total + ratio + i}>
+                                        <Link to={"/Pokemon/" + (total + ratio + i)} value={total + ratio + i} onClick={onclickSet}>
+                                            <li className="text-center"> <img src={'/pokeball.png'} className="App-logo-list" alt="logo" /> N° {(total + ratio + i)}</li>
+                                            <div className="text-center">
+                                                <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + (total + ratio + i) + '.png'} alt='' />
+                                            </div>
+                                            <li className="text-center capitalize">{pokemonListNext.name}</li>
+                                        </Link>
+
+                                        <PokemonCapture id={(total + i)} ratio={(ratio)}/>
+                                        <PokemonTeam id={(total + i)} ratio={(ratio)}/>
+
+                                        {/*pokemonTeams.id.find((pokemonTeam) => (
+                                            i === pokemonTeam - ratio
+                                        )) !== undefined ? <form onSubmit={(e) => onClickRemovePokemonList(i + ratio, e)}> <button className={'btnEnlever'} name='pokemonTeams' ></button><div>capturer</div></form> : <form onSubmit={(e) => onClickAddPokemonList(i + ratio, e)}><button className={'btnAjouter'} name='pokemonTeams'></button></form>*/}
+                                    </div>
+                                    : ''
+                            ))}
+                        </div>
                     </div>
                 </div>
             }

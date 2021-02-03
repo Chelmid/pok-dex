@@ -85,3 +85,18 @@ ul{
 .borderError {
   border: 1px solid red;
 }
+
+/* ajouter remove pokemon*/
+.btnAjouter {
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  background-color: red;
+}
+
+.btnEnlever {
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  background-color: lightgreen;
+}

@@ -80,7 +80,7 @@ const Login = () => {
     return (
 
         <div>
-            <form onSubmit={handleSubmitConnect} className='col-4' style={{ margin: ' auto' }}>
+            <form onSubmit={handleSubmitConnect} style={{ margin: ' auto' }}>
                 <h2 className='text-center' >Login</h2>
                 <div className='text-center'>{msg}</div>
                 <div style={{ display: ' grid' }}>

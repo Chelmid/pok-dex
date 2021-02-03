@@ -2,8 +2,10 @@ const initialState = {
 
     connect: false,
     seePassword: 'password',
-    message: '',
-    pokemonTeams: { id: [] }
+    messageTeam: '',
+    pokemonTeams: { id: [] },
+    messageCapture: '',
+    pokemonCapture: { id: [] }
 
 }
 
@@ -22,25 +24,43 @@ let ConnectUserReducer = (state = initialState, action = {}) => {
             return { ...state, seePassword: action.showPassword }
 
         case 'POKEMON_TEAM_ADD':
-            console.log(state.pokemonTeams.id)
+            console.log(state.pokemonTeams)
             if (state.pokemonTeams.id.length < 6) {
                 state.pokemonTeams.id.push(action.pokemonTeamAdd)
-                return { ...state, pokemonTeams: state.pokemonTeams, message: 'le pokemon est ajouté dans votre équipe' }
-            }/* else {
-                return { ...state, message: 'La team est complète' }
-            }*/
+                return { ...state, pokemonTeams: state.pokemonTeams, messageTeam: 'In team' }
+            } else {
+                return { ...state, messageTeam: 'team full' }
+            }
 
         case 'POKEMON_TEAM_REMOVE':
             console.log(state.pokemonTeams)
 
-            state.pokemonTeams.id = state.pokemonTeams.id.filter((item) => action.pokemonTeamRemove !== item)
+            state.pokemonTeams.id = state.pokemonTeams.id.filter((id) => action.pokemonTeamRemove !== id)
             return { ...state, pokemonTeams: state.pokemonTeams }
 
-        case 'ONLOAD_POKEMONTEAMS' :
+        case 'ONLOAD_POKEMON_TEAMS':
             console.log(action.pokemonTeamOnload)
             state.pokemonTeams = action.pokemonTeamOnload
 
-            return { ...state, pokemonTeams: state.pokemonTeams, message: 'le pokemon est ajouté dans votre équipe' }
+            return { ...state, pokemonTeams: state.pokemonTeams, messageTeam: 'In team' }
+
+        case 'ONLOAD_POKEMON_CAPTURE':
+            console.log(action.pokemonCaptureOnload)
+            state.pokemonCapture = action.pokemonCaptureOnload
+
+            return { ...state, pokemonCapture: state.pokemonCapture, messageCapture: 'capturer' }
+
+        case 'POKEMON_CAPTURE_ADD':
+            console.log(state.pokemonCapture.id)
+            state.pokemonCapture.id.push(action.pokemonCaptureAdd)
+            return { ...state, pokemonCapture: state.pokemonCapture, messageCapture: 'capturer' }
+
+
+        case 'POKEMON_CAPTURE_REMOVE':
+            console.log(state.pokemonCapture)
+
+            state.pokemonCapture.id = state.pokemonCapture.id.filter((id) => action.pokemonCaptureRemove !== id)
+            return { ...state, pokemonCapture: state.pokemonCapture }
 
         default:
             return state;

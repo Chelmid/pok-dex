@@ -80,14 +80,14 @@ app.post('/register', (req, res) => {
     if (mongoose.connection.readyState === 1) {
 
         //schema des fields
-        const schema = new mongoose.Schema({ email: 'string', name: 'string', password: 'string', pokemonTeam: 'object' });
+        const schema = new mongoose.Schema({ email: 'string', name: 'string', password: 'string', pokemonTeam: 'object', pokemonCapture: 'object' });
         // selection des du models et fields
         const Users = mongoose.model('Users', schema);
 
         // find email si pas dans la base de données
         Users.findOne({ email: req.body.email }).exec((err, docs) => {
             if (docs == null) {
-                Users.create({ email: req.body.email, name: req.body.name, password: req.body.password, pokemonTeam: { "id": [] } }, (err, small) => {
+                Users.create({ email: req.body.email, name: req.body.name, password: req.body.password, pokemonTeam: { "id": [] }, pokemonCapture: {'id' : []} }, (err, small) => {
                     if (err) return handleError(err);
                     // saved!
                 });
@@ -107,46 +107,14 @@ app.post('/register', (req, res) => {
     }
 })
 
+//add team
 app.put('/pokemon/list/addTeam', (req, res) => {
     mongoose.models = {}
 
     if (mongoose.connection.readyState === 1) {
 
         //schema des fields
-        const schema = new mongoose.Schema({ email: 'string', name: 'string', password: 'string', pokemonTeam: { "id": [] } });
-        // selection des du models et fields
-        const Users = mongoose.model('Users', schema);
-
-        // find email si pas dans la base de données
-        Users.findOne({ email: req.body.email }).exec((err, docs) => {
-            if (docs == null) {
-                console.log(docs);
-                console.log(req.body.pokemonTeams.id)
-                console.log('vide');
-                res.send({ message: 'error' })
-            }
-            else {
-                console.log(req.body.pokemonTeams.id)
-                console.log(docs);
-                docs.pokemonTeam.id = req.body.pokemonTeams.id
-                docs.save();
-
-                console.log('exitant');
-                res.send({ id : docs.pokemonTeam.id })
-            }
-        });
-
-    } else {
-        console.log('error')
-    }
-})
-app.put('/pokemon/list/addTeam', (req, res) => {
-    mongoose.models = {}
-
-    if (mongoose.connection.readyState === 1) {
-
-        //schema des fields
-        const schema = new mongoose.Schema({ email: 'string', name: 'string', password: 'string', pokemonTeam: { "id": [] } });
+        const schema = new mongoose.Schema({ email: 'string', name: 'string', password: 'string', pokemonTeam: { "id": [] }, pokemonCapture: {'id' : []} });
         // selection des du models et fields
         const Users = mongoose.model('Users', schema);
 
@@ -174,13 +142,49 @@ app.put('/pokemon/list/addTeam', (req, res) => {
     }
 })
 
+// rempve team 
+app.put('/pokemon/list/removeTeam', (req, res) => {
+    mongoose.models = {}
+
+    if (mongoose.connection.readyState === 1) {
+
+        //schema des fields
+        const schema = new mongoose.Schema({ email: 'string', name: 'string', password: 'string', pokemonTeam: { 'id': [] }, pokemonCapture: {'id' : []} });
+        // selection des du models et fields
+        const Users = mongoose.model('Users', schema);
+
+        // find email si pas dans la base de données
+        Users.findOne({ email: req.body.email }).exec((err, docs) => {
+            if (docs == null) {
+                console.log(docs);
+                console.log(req.body.pokemonTeams.id)
+                console.log('vide');
+                res.send({ message: 'error' })
+            }
+            else {
+                console.log(req.body.pokemonTeams.id)
+                console.log(docs);
+                docs.pokemonTeam.id = req.body.pokemonTeams.id
+                docs.save();
+
+                console.log('exitant');
+                res.send({ id : docs.pokemonTeam.id })
+            }
+        });
+
+    } else {
+        console.log('error')
+    }
+})
+
+//load
 app.post('/pokemon/list', (req, res) => {
     mongoose.models = {}
 
     if (mongoose.connection.readyState === 1) {
 
         //schema des fields
-        const schema = new mongoose.Schema({ email: 'string', name: 'string', password: 'string', pokemonTeam: { "id": [] } });
+        const schema = new mongoose.Schema({ email: 'string', name: 'string', password: 'string', pokemonTeam: { "id": [] }, pokemonCapture: {'id' : []} });
         // selection des du models et fields
         const Users = mongoose.model('Users', schema);
 
@@ -195,7 +199,77 @@ app.post('/pokemon/list', (req, res) => {
             else {
                 console.log(docs);
                 console.log('exitant');
-                res.send({ id : docs.pokemonTeam.id })
+                res.send({ idTeam : docs.pokemonTeam, idCapture : docs.pokemonCapture  })
+            }
+        });
+
+    } else {
+        console.log('error')
+    }
+})
+
+//remove capture
+app.put('/pokemon/list/removeCapture', (req, res) => {
+    mongoose.models = {}
+
+    if (mongoose.connection.readyState === 1) {
+
+        //schema des fields
+        const schema = new mongoose.Schema({ email: 'string', name: 'string', password: 'string', pokemonTeam: { 'id': [] }, pokemonCapture: {'id' : []} });
+        // selection des du models et fields
+        const Users = mongoose.model('Users', schema);
+
+        // find email si pas dans la base de données
+        Users.findOne({ email: req.body.email }).exec((err, docs) => {
+            if (docs == null) {
+                console.log(docs);
+                console.log(req.body.pokemonCapture.id)
+                console.log('vide');
+                res.send({ message: 'error' })
+            }
+            else {
+                console.log(req.body.pokemonCapture.id)
+                console.log(docs);
+                docs.pokemonCapture.id = req.body.pokemonCapture.id
+                docs.save();
+
+                console.log('exitant');
+                res.send({ id : docs.pokemonCapture.id })
+            }
+        });
+
+    } else {
+        console.log('error')
+    }
+})
+
+//add capture
+app.put('/pokemon/list/addCapture', (req, res) => {
+    mongoose.models = {}
+
+    if (mongoose.connection.readyState === 1) {
+
+        //schema des fields
+        const schema = new mongoose.Schema({ email: 'string', name: 'string', password: 'string', pokemonTeam: { "id": [] }, pokemonCapture: {'id' : []} });
+        // selection des du models et fields
+        const Users = mongoose.model('Users', schema);
+
+        // find email si pas dans la base de données
+        Users.findOne({ email: req.body.email }).exec((err, docs) => {
+            if (docs == null) {
+                console.log(docs);
+                console.log(req.body.pokemonCapture.id)
+                console.log('vide');
+                res.send({ message: 'error' })
+            }
+            else {
+                console.log(req.body.pokemonCapture.id)
+                console.log(docs);
+                docs.pokemonCapture.id = req.body.pokemonCapture.id
+                docs.save();
+
+                console.log('exitant');
+                res.send({ id : docs.pokemonCapture.id })
             }
         });
 
