@@ -8,9 +8,6 @@ const mongoose = require('mongoose');
 const axios = require('axios')
 const path = require("path");
 
-import favicon from "serve-favicon";
-server.use(favicon(path.join(__dirname, "../assets/images/favicon.ico")));
-
 //use express
 app.use(express.static("public"));
 app.use(express.json())
