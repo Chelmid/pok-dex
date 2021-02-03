@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const PORT = process.env.PORT || 4000
+const port = process.env.PORT || 4000
 var router = express.Router();
 // require pour la connexion
 const connect = require('./ConnectDatabase')
@@ -279,6 +279,6 @@ app.put('/pokemon/list/addCapture', (req, res) => {
 })
 
 //connection du serveur dnas le port 4000
-app.listen(PORT, () => {
-    console.log(`Example app listening at http://localhost:${PORT}`)
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
 })
