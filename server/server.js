@@ -24,7 +24,7 @@ router.use(function timeLog(req, res, next) {
 
 //home
 app.get("/", (req, res) => {
-    res.sendFile('index.html');
+    res.sendFile('/dist/project01/index.html');
 });
 
 
