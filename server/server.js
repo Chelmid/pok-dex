@@ -11,7 +11,7 @@ const host = '0.0.0.0';
 
 //use express
 app.use(express.static("public"));
-app.use(express.static('build'));
+app.use(express.static('client'));
 app.use(express.json())
 
 // CORS permission
@@ -24,7 +24,7 @@ router.use(function timeLog(req, res, next) {
 
 //home
 app.get("/", (req, res) => {
-    res.sendFile('/dist/project01/index.html');
+    res.sendFile(__dirname + "/client/index.html");
 });
 
 
