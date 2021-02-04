@@ -22,11 +22,11 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "node ./server/server.js",
+    "start": "nodemon ./server/server.js",
     "server": "nodemon ./server/server.js",
-    "client":"cd client && npm start",
+    "client": "cd client && npm start",
     "build": "cd client && npm run build",
-    "install-client":"cd client && npm install",
+    "install-client": "cd client && npm install",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "heroku-postbuild": "cd client && npm install && npm run build"
