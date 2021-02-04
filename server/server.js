@@ -10,8 +10,9 @@ const path = require("path");
 
 //use express
 //app.use('/', express.static(__dirname + 'client/build'));
-app.use('client/public', express.static(path.join(__dirname, '/')));
+//app.use('client/public', express.static(path.join(__dirname, '/')));
 app.use(express.json())
+app.use(express.static('client/build'))
 
 // CORS permission
 router.use(function timeLog(req, res, next) {
@@ -23,9 +24,7 @@ router.use(function timeLog(req, res, next) {
 
 //home
 app.get("/", (req, res) => { 
-    //res.send('hello')
-    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
-    //res.sendFile(path.join(__dirname, '../client/public', 'index.html'));
+    res.send(path.join(__dirname, '../client/public', 'index.html'))
 });
 
 
@@ -180,8 +179,12 @@ app.put('/pokemon/list/removeTeam', (req, res) => {
     }
 })
 
+app.get('/pokemon/list', (req, res) => {
+    res.redirect('/pokemon/list/onload');
+})
+
 //load
-app.post('/pokemon/list', (req, res) => {
+app.post('/pokemon/list/onload', (req, res) => {
     mongoose.models = {}
 
     if (mongoose.connection.readyState === 1) {

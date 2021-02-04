@@ -61,7 +61,7 @@ const PokemonList = () => {
         }
         console.log(cookies.email)
         if (cookies.email !== undefined) {
-            axios.post('/pokemon/list', { email: cookies.email }).then((response) => (
+            axios.post('/pokemon/list/onload', { email: cookies.email }).then((response) => (
             console.log(response),
             dispatch({
                 type: 'ONLOAD_POKEMON_TEAMS',

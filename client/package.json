@@ -33,7 +33,6 @@
     "node": "12.x.x",
     "npm": "6.x.x"
   },
-  "proxy": "http://localhost:5000",
   "eslintConfig": {
     "extends": [
       "react-app",
