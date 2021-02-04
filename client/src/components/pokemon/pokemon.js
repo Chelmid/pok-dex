@@ -20,7 +20,6 @@ const Pokemon = () => {
             .then(res => res.json())
             .then(
                 (data) => {
-                    console.log(data)
                     //appel des dispacth dans le ReducerPokemon
                     dispatch({
                         type: 'SET_POKEMON_DATA',
@@ -40,11 +39,9 @@ const Pokemon = () => {
             )
     }, [apiPokemonSolo, id, dispatch])
 
-    console.log(dataPokemon)
-
     return (
-        <div className='mt-5 d-flex'>
-            <div className='col-4'>
+        <div className='mt-5 d-flex flex-wrap'>
+            <div className='col-auto'>
                 <h2 className='capitalize'>N°{idPokemon} {dataPokemon.name}</h2>
                 <div className="d-flex">Type :
                     <div className='d-flex'>{idPokemon && dataPokemon.types.map((type, i) => (

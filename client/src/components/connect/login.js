@@ -38,10 +38,8 @@ const Login = () => {
                 email: email,
                 password: pwd
             }).then(res => {
-                console.log(res)
                 /*history.push('/login')*/
                 if( res.data.message === 'connecter' ){
-                    console.log(res.data.message)
                     dispatch({
                         type: 'CONNECT',
                         connection: true
@@ -50,7 +48,6 @@ const Login = () => {
                     setCookie('email',email)
                     history.push('/pokemon/list')
                 }else{
-                    console.log('error')
                     setMsg(res.data.message)
                 }
             }).catch(error => setMsg('server erreur'))

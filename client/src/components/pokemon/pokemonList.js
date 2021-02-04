@@ -44,7 +44,6 @@ const PokemonList = () => {
                 .then(
                     (data) => {
                         setPokemonList(data.results);
-                        console.log(data.results)
                         //insere donnes dans le inttstate
                         dispatch({
                             type: 'COUNTER_POKEMON',
@@ -59,10 +58,8 @@ const PokemonList = () => {
                     }
                 )
         }
-        console.log(cookies.email)
         if (cookies.email !== undefined) {
             axios.post('/pokemon/list/onload', { email: cookies.email }).then((response) => (
-            console.log(response),
             dispatch({
                 type: 'ONLOAD_POKEMON_TEAMS',
                 pokemonTeamOnload: response.data.idTeam

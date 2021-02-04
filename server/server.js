@@ -16,7 +16,6 @@ app.use(express.static('client/build'))
 
 // CORS permission
 router.use(function timeLog(req, res, next) {
-    console.log('Time: ', Date.now());
     //autorisation pour le front a acceder au données
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
     next();
@@ -51,10 +50,10 @@ app.post("/login", (req, res) => {
         // find email si pas dans la base de données
         Users.findOne({ email: req.body.email, password: req.body.password }).exec((err, docs) => {
             if (docs == null) {
-                console.log(docs)
+
                 res.redirect('/login/error');
             } else {
-                console.log(docs)
+ 
                 res.redirect('/login/success');
             }
         });
@@ -93,13 +92,11 @@ app.post('/register', (req, res) => {
                     if (err) return handleError(err);
                     // saved!
                 });
-                console.log(docs);
-                console.log('vide');
+
                 res.redirect('/register/success');
             }
             else {
-                console.log(docs);
-                console.log('exitant');
+
                 res.redirect('/register/error');
             }
         });
@@ -123,18 +120,14 @@ app.put('/pokemon/list/addTeam', (req, res) => {
         // find email si pas dans la base de données
         Users.findOne({ email: req.body.email }).exec((err, docs) => {
             if (docs == null) {
-                console.log(docs);
-                console.log(req.body.pokemonTeams.id)
-                console.log('vide');
+
                 res.send({ message: 'error' })
             }
             else {
-                console.log(req.body.pokemonTeams.id)
-                console.log(docs);
+
                 docs.pokemonTeam.id = req.body.pokemonTeams.id
                 docs.save();
 
-                console.log('exitant');
                 res.send({ id : docs.pokemonTeam.id })
             }
         });
@@ -158,18 +151,13 @@ app.put('/pokemon/list/removeTeam', (req, res) => {
         // find email si pas dans la base de données
         Users.findOne({ email: req.body.email }).exec((err, docs) => {
             if (docs == null) {
-                console.log(docs);
-                console.log(req.body.pokemonTeams.id)
-                console.log('vide');
                 res.send({ message: 'error' })
             }
             else {
-                console.log(req.body.pokemonTeams.id)
-                console.log(docs);
+
                 docs.pokemonTeam.id = req.body.pokemonTeams.id
                 docs.save();
 
-                console.log('exitant');
                 res.send({ id : docs.pokemonTeam.id })
             }
         });
@@ -196,15 +184,10 @@ app.post('/pokemon/list/onload', (req, res) => {
 
         // find email si pas dans la base de données
         Users.findOne({ email: req.body.email }).exec((err, docs) => {
-            console.log(req.body.email)
             if (docs == null) {
-                console.log(docs);
-                console.log('vide');
                 res.send({ message: 'error' })
             }
             else {
-                console.log(docs);
-                console.log('exitant');
                 res.send({ idTeam : docs.pokemonTeam, idCapture : docs.pokemonCapture  })
             }
         });
@@ -228,18 +211,15 @@ app.put('/pokemon/list/removeCapture', (req, res) => {
         // find email si pas dans la base de données
         Users.findOne({ email: req.body.email }).exec((err, docs) => {
             if (docs == null) {
-                console.log(docs);
-                console.log(req.body.pokemonCapture.id)
-                console.log('vide');
+
                 res.send({ message: 'error' })
             }
             else {
-                console.log(req.body.pokemonCapture.id)
-                console.log(docs);
+
                 docs.pokemonCapture.id = req.body.pokemonCapture.id
                 docs.save();
 
-                console.log('exitant');
+
                 res.send({ id : docs.pokemonCapture.id })
             }
         });
@@ -263,18 +243,12 @@ app.put('/pokemon/list/addCapture', (req, res) => {
         // find email si pas dans la base de données
         Users.findOne({ email: req.body.email }).exec((err, docs) => {
             if (docs == null) {
-                console.log(docs);
-                console.log(req.body.pokemonCapture.id)
-                console.log('vide');
                 res.send({ message: 'error' })
             }
             else {
-                console.log(req.body.pokemonCapture.id)
-                console.log(docs);
                 docs.pokemonCapture.id = req.body.pokemonCapture.id
                 docs.save();
 
-                console.log('exitant');
                 res.send({ id : docs.pokemonCapture.id })
             }
         });

@@ -9,12 +9,12 @@ let pokemonListTotalApi = 850
 // initialisation des states
 const initialState = {
     total: totalInit,
-    limite : limiteInit,
+    limite: limiteInit,
     apiPokemon: 'https://pokeapi.co/api/v2/pokemon?limit=' + totalInit,
     displayList: true,
     pokemonListContinue: 'https://pokeapi.co/api/v2/pokemon/?limit=' + limiteInit + '&offset=' + totalInit,
     pokemonListTotal: [],
-    pokedex : true
+    pokedex: true
 }
 
 let ReducerPokemonlist = (state = initialState, action = {}) => {
@@ -22,34 +22,27 @@ let ReducerPokemonlist = (state = initialState, action = {}) => {
     switch (action.type) {
 
         case 'INIT_LIST':
-            console.log(state.countPokemon)
 
             return { ...state, countPokemon: state.countPokemon.push(action.payload) }
 
         case 'STATUS_ONE_POKEMON':
-            console.log(state.pokedex)
-            console.log(action.pokedex)
 
-            return { ...state, displayList: action.display, pokedex : action.pokedex }
+            return { ...state, displayList: action.display, pokedex: action.pokedex }
 
         case 'COUNTER_POKEMON':
-            console.log(state.countPokemon)
 
             return { ...state, countPokemon: action.counter }
 
         case 'LIST_CONTINUE_POKEMON':
-            console.log(state.pokemonListContinue)
 
-            console.log(state.limite)
-            if(state.limite <= pokemonListTotalApi ){
+            if (state.limite <= pokemonListTotalApi) {
                 state.limite = state.limite + action.continue
                 return { ...state, pokemonListContinue: 'https://pokeapi.co/api/v2/pokemon/?limit=' + state.limite + '&offset=' + state.total }
-            }else{
+            } else {
                 return state;
             }
-            
+
         case 'LIST_TOTAL_POKEMON':
-            console.log(state.pokemonListTotal)
 
             return { ...state, pokemonListTotal: action.nextList }
         default:

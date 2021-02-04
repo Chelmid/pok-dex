@@ -14,7 +14,6 @@ const PokemonCapture = (pokemon) => {
 
     //add pokemon in team
     const onClickAddPokemonListTeam = (i, e) => {
-        console.log(i)
         e.preventDefault()
         dispatch({
             type: 'POKEMON_TEAM_ADD',
@@ -37,7 +36,6 @@ const PokemonCapture = (pokemon) => {
 
     //remove pokemon in team
     const onClickRemovePokemonListTeam = (i, e) => {
-        console.log(i)
         e.preventDefault()
         dispatch({
             type: 'POKEMON_TEAM_REMOVE',
