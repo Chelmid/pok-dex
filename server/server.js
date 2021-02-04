@@ -1,16 +1,16 @@
 const express = require('express')
 const app = express()
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT || 5000
 var router = express.Router();
 // require pour la connexion
 const connect = require('./ConnectDatabase')
 const mongoose = require('mongoose');
 const axios = require('axios')
 const path = require("path");
-const host = '0.0.0.0';
 
 //use express
-app.use(express.static("client/public"));
+//app.use('/', express.static(__dirname + 'client/build'));
+app.use('client/public', express.static(path.join(__dirname, '/')));
 app.use(express.json())
 
 // CORS permission
@@ -22,8 +22,10 @@ router.use(function timeLog(req, res, next) {
 });
 
 //home
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname ,'./client/public/index.html'));
+app.get("/", (req, res) => { 
+    //res.send('hello')
+    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+    //res.sendFile(path.join(__dirname, '../client/public', 'index.html'));
 });
 
 
@@ -280,6 +282,6 @@ app.put('/pokemon/list/addCapture', (req, res) => {
 })
 
 //connection du serveur dnas le port 4000
-app.listen(PORT,host, () => {
+app.listen(PORT, () => {
     console.log(`Example app listening at http://localhost:${PORT}`)
 })
