@@ -68,16 +68,7 @@ const PokemonList = () => {
                 type: 'ONLOAD_POKEMON_CAPTURE',
                 pokemonCaptureOnload: response.data.idCapture
             }))
-            ).catch(error => {
-                if (error) {
-                    dispatch({
-                        type: 'CONNECT',
-                        connection: false
-                    })
-                    removeCookie('connect')
-                    history.push('/login')
-                }
-            })
+            )
         }
     }, [apiPokemon, dispatch, displayList,cookies.email,history,removeCookie])
 

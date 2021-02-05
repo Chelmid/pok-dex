@@ -16,28 +16,28 @@ const Menu = () => {
     const { connect } = useSelector(state => state.ConnectUserReducer)
     const dispatch = useDispatch();
 
-    const [cookies, removeCookie] = useCookies(['cookie-name']);
+    const [cookies, setCookie] = useCookies(['cookie-name']);
 
     // hook redirection page
     const history = useHistory();
 
     //useEffet
     useEffect(() => {
-        if(cookies.connect === 'true'){
+        if (cookies.connect === 'true') {
             dispatch({
                 type: 'CONNECT',
                 connection: true
             })
-        }else{
+        } else {
             dispatch({
                 type: 'CONNECT',
                 connection: false
             })
         }
-    }, [dispatch, cookies.connect])
+    }, [dispatch, cookies])
 
     //click home
-    const onclickSetOn = () => (
+    const onclickremoveOn = () => (
         dispatch({
             type: 'STATUS_ONE_POKEMON',
             display: true,
@@ -46,7 +46,7 @@ const Menu = () => {
     )
 
     //click list
-    const onclickSetPokedex = () => (
+    const onclickremovePokedex = () => (
         dispatch({
             type: 'STATUS_ONE_POKEMON',
             display: true,
@@ -56,8 +56,10 @@ const Menu = () => {
 
     //click logout
     const onclickLogout = () => (
-        removeCookie('connect'),
-        removeCookie('email'),
+        setCookie('connect', false, { path: '/pokemon/list' }),
+        setCookie('email', '', { path: '/pokemon/list' }),
+        setCookie('connect', false, { path: '/' }),
+        setCookie('email', '', { path: '/' }),
         dispatch({
             type: 'CONNECT',
             connection: false
@@ -73,21 +75,21 @@ const Menu = () => {
     return (
 
         <div className='d-flex'>
-            <Link to={"/"} onClick={onclickSetOn}>
+            <Link to={"/"} onClick={onclickremoveOn}>
                 <img src={'/pokeball.png'} className="App-logo" alt="logo" />
             </Link>
-            {!displayList && (<Link className='ml-4' to={"/pokemon/list"} onClick={onclickSetPokedex}>back</Link>)}
+            {!displayList && (<Link className='ml-4' to={"/pokemon/list"} onClick={onclickremovePokedex}>back</Link>)}
 
             <div className="col text-right">
                 <div className='d-flex justify-content-end'>
                     {connect && <Link to={"/pokemon/list"} >
-                        <div className='mr-3' onClick={onclickSetPokedex} >List</div>
+                        <div className='mr-3' onClick={onclickremovePokedex} >List</div>
                     </Link>}
                     {!connect && (<Link to={"/register"} >
-                        <div className='mr-3' onClick={onclickSetPokedex} >Register</div>
+                        <div className='mr-3' onClick={onclickremovePokedex} >Register</div>
                     </Link>)}
                     {!connect && (<Link to={"/login"} >
-                        <div className='mr-3' onClick={onclickSetPokedex}>Login</div>
+                        <div className='mr-3' onClick={onclickremovePokedex}>Login</div>
                     </Link>)}
                     {connect && (<Link to={"/"} >
                         <div className='mr-3' onClick={onclickLogout}>Logout</div>

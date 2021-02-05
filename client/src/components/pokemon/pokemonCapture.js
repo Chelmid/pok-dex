@@ -5,14 +5,14 @@ import axios from 'axios';
 import { useHistory } from "react-router-dom";
 
 const PokemonCapture = (pokemon) => {
-    
+
     const dispatch = useDispatch();
     const [cookies, removeCookie] = useCookies(['cookie-name']);
     const history = useHistory();
-    const { connect,pokemonCapture, messageCapture } = useSelector(state => state.ConnectUserReducer);
+    const { connect, pokemonCapture, messageCapture } = useSelector(state => state.ConnectUserReducer);
 
     const onClickRemovePokemonListCapture = (i, e) => {
-        console.log(e)
+
         e.preventDefault()
         dispatch({
             type: 'POKEMON_CAPTURE_REMOVE',
@@ -31,7 +31,7 @@ const PokemonCapture = (pokemon) => {
                 history.push('/login')
             }
         })
-        
+
     }
 
     const onClickAddPokemonListCapture = (i, e) => {
@@ -54,7 +54,7 @@ const PokemonCapture = (pokemon) => {
                 history.push('/login')
             }
         })
-        
+
     }
 
     return (

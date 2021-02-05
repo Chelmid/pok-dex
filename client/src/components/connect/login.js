@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
+import { createPortal } from 'react-dom';
 
 const Login = () => {
 
@@ -39,17 +40,24 @@ const Login = () => {
                 password: pwd
             }).then(res => {
                 /*history.push('/login')*/
-                if( res.data.message === 'connecter' ){
-                    dispatch({
-                        type: 'CONNECT',
-                        connection: true
+                console.log(res)
+                axios.get(res.request.responseURL)
+                    .then(response => {
+                        let str = response.request.responseURL
+                        if (str.includes("/login/success/") == true || res.data.message === 'connecter') {
+                            dispatch({
+                                type: 'CONNECT',
+                                connection: true
+                            })
+                            setCookie('connect', true, { path: '/pokemon/list' })
+                            setCookie('email', email, { path: '/pokemon/list' })
+                            setCookie('connect', true, { path: '/' })
+                            setCookie('email', email, { path: '/' })
+                            history.push('/pokemon/list')
+                        } else {
+                            setMsg("erreur de mot ou d'adresse mail")
+                        }
                     })
-                    setCookie('connect',true)
-                    setCookie('email',email)
-                    history.push('/pokemon/list')
-                }else{
-                    setMsg(res.data.message)
-                }
             }).catch(error => setMsg('server erreur'))
             setMessage('')
         } else {

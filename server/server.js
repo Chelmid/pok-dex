@@ -13,6 +13,7 @@ const path = require("path");
 //app.use('client/public', express.static(path.join(__dirname, '/')));
 app.use(express.json())
 app.use(express.static('client/build'))
+app.use('*', express.static('client/build'))
 
 // CORS permission
 router.use(function timeLog(req, res, next) {
@@ -25,7 +26,6 @@ router.use(function timeLog(req, res, next) {
 app.get("/", (req, res) => { 
     res.send(path.join(__dirname, '../client/public', 'index.html'))
 });
-
 
 //login 
 app.get("/login/success", (req, res) => {
@@ -50,10 +50,10 @@ app.post("/login", (req, res) => {
         // find email si pas dans la base de données
         Users.findOne({ email: req.body.email, password: req.body.password }).exec((err, docs) => {
             if (docs == null) {
-
+                console.log('error')
                 res.redirect('/login/error');
             } else {
- 
+                console.log('success')
                 res.redirect('/login/success');
             }
         });
@@ -167,9 +167,9 @@ app.put('/pokemon/list/removeTeam', (req, res) => {
     }
 })
 
-app.get('/pokemon/list', (req, res) => {
-    res.redirect('/pokemon/list/onload');
-})
+/*app.get('/pokemon/list', (req, res) => {
+    res.send('error')
+})*/
 
 //load
 app.post('/pokemon/list/onload', (req, res) => {
@@ -257,6 +257,11 @@ app.put('/pokemon/list/addCapture', (req, res) => {
         console.log('error')
     }
 })
+
+
+/*app.get("*", (req, res) => { 
+    res.redirect("/");
+});*/
 
 //connection du serveur dnas le port 4000
 app.listen(PORT, () => {
