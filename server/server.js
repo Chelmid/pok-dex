@@ -50,10 +50,10 @@ app.post("/login", (req, res) => {
         // find email si pas dans la base de données
         Users.findOne({ email: req.body.email, password: req.body.password }).exec((err, docs) => {
             if (docs == null) {
-                console.log('error')
+                //console.log('error')
                 res.redirect('/login/error');
             } else {
-                console.log('success')
+                //console.log('success')
                 res.redirect('/login/success');
             }
         });
@@ -124,10 +124,11 @@ app.put('/pokemon/list/addTeam', (req, res) => {
                 res.send({ message: 'error' })
             }
             else {
-
+                //save element
                 docs.pokemonTeam.id = req.body.pokemonTeams.id
                 docs.save();
 
+                 //response data
                 res.send({ id : docs.pokemonTeam.id })
             }
         });
@@ -154,10 +155,11 @@ app.put('/pokemon/list/removeTeam', (req, res) => {
                 res.send({ message: 'error' })
             }
             else {
-
+                //save element
                 docs.pokemonTeam.id = req.body.pokemonTeams.id
                 docs.save();
 
+                 //response data
                 res.send({ id : docs.pokemonTeam.id })
             }
         });
@@ -188,6 +190,7 @@ app.post('/pokemon/list/onload', (req, res) => {
                 res.send({ message: 'error' })
             }
             else {
+                //response data
                 res.send({ idTeam : docs.pokemonTeam, idCapture : docs.pokemonCapture  })
             }
         });
@@ -215,11 +218,11 @@ app.put('/pokemon/list/removeCapture', (req, res) => {
                 res.send({ message: 'error' })
             }
             else {
-
+                //save element
                 docs.pokemonCapture.id = req.body.pokemonCapture.id
                 docs.save();
 
-
+                 //response data
                 res.send({ id : docs.pokemonCapture.id })
             }
         });
@@ -246,9 +249,11 @@ app.put('/pokemon/list/addCapture', (req, res) => {
                 res.send({ message: 'error' })
             }
             else {
+                //save element
                 docs.pokemonCapture.id = req.body.pokemonCapture.id
                 docs.save();
 
+                 //response data
                 res.send({ id : docs.pokemonCapture.id })
             }
         });

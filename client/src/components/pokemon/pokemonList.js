@@ -139,9 +139,6 @@ const PokemonList = () => {
                                         <PokemonCapture id={(total + i)} ratio={(ratio)}/>
                                         <PokemonTeam id={(total + i)} ratio={(ratio)}/>
 
-                                        {/*pokemonTeams.id.find((pokemonTeam) => (
-                                            i === pokemonTeam - ratio
-                                        )) !== undefined ? <form onSubmit={(e) => onClickRemovePokemonList(i + ratio, e)}> <button className={'btnEnlever'} name='pokemonTeams' ></button><div>capturer</div></form> : <form onSubmit={(e) => onClickAddPokemonList(i + ratio, e)}><button className={'btnAjouter'} name='pokemonTeams'></button></form>*/}
                                     </div>
                                     : ''
                             ))}

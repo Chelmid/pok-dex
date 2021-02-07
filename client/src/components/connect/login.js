@@ -55,7 +55,7 @@ const Login = () => {
                             setCookie('email', email, { path: '/' })
                             history.push('/pokemon/list')
                         } else {
-                            setMsg("erreur de mot ou d'adresse mail")
+                            setMsg("erreur mot de passe ou d'adresse mail")
                         }
                     })
             }).catch(error => setMsg('server erreur'))
