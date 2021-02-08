@@ -18,8 +18,6 @@ const Pokemon = (idPokemonSearch) => {
         id = idPokemonSearch.id
     }
 
-    console.log(idPokemon)
-
     useEffect(() => {
 
         fetch(apiPokemonSolo + id)
