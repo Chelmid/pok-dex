@@ -17,8 +17,13 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
+import PokemonSearch from '../pokemon/pokemonSearch';
+
 
 const Home = () => {
+
+
+    const { connect} = useSelector(state => state.ConnectUserReducer);
 
     //call des élements du initState dans le reducerListPokemon
     const { displayList, pokedex } = useSelector(state => state.ReducerPokemonlist);
@@ -27,7 +32,9 @@ const Home = () => {
         <div className='container'>
             <Router>
                 <Menu />
-
+                {displayList && connect && (
+                        <PokemonSearch />
+                )}
                 {pokedex && (
 
                     <div className='pokedex' >

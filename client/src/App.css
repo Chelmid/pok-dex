@@ -100,3 +100,8 @@ ul{
   width: 30px;
   background-color: lightgreen;
 }
+
+.barSearch {
+  display: flex;
+  justify-content: flex-end;
+}

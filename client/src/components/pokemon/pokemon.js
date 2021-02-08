@@ -4,15 +4,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     useParams
 } from "react-router-dom";
+import PokemonSearch from './pokemonSearch';
 
-const Pokemon = () => {
-
+const Pokemon = (idPokemonSearch) => {
+    console.log(idPokemonSearch.id)
     // les state dans ReducerPokemon
     const { idPokemon, dataPokemon, apiPokemonSolo, colorTypes } = useSelector(state => state.ReducerPokemon);
     const dispatch = useDispatch();
 
     // recupere parametre dans l'url
     let { id } = useParams();
+
+    if (id == '' || id == undefined) {
+        id = idPokemonSearch.id
+    }
+
+    console.log(idPokemon)
 
     useEffect(() => {
 
@@ -21,6 +28,7 @@ const Pokemon = () => {
             .then(
                 (data) => {
                     //appel des dispacth dans le ReducerPokemon
+                    console.log(data)
                     dispatch({
                         type: 'SET_POKEMON_DATA',
                         data: data
@@ -44,11 +52,12 @@ const Pokemon = () => {
             <div className='col-auto'>
                 <h2 className='capitalize'>N°{idPokemon} {dataPokemon.name}</h2>
                 <div className="d-flex">Type :
-                    <div className='d-flex'>{idPokemon && dataPokemon.types.map((type, i) => (
-                    Object.entries(colorTypes).map((color, j) => (
-                        color[0] === type.type.name ? <div key={j} className='mx-2 text-white' style={{ backgroundColor: color[1] }}>{type.type.name}</div> : ''
-                    ))
-                ))}
+                    <div className='d-flex'>
+                        {id && idPokemon && dataPokemon.types.map((type, i) => (
+                            Object.entries(colorTypes).map((color, j) => (
+                                color[0] === type.type.name ? <div key={j} className='mx-2 text-white' style={{ backgroundColor: color[1] }}>{type.type.name}</div> : ''
+                            ))
+                        ))}
                     </div>
                 </div>
                 <div className='d-flex'>
@@ -69,11 +78,11 @@ const Pokemon = () => {
             </div>
             <div className='col-4'>
                 <h5 className='mt-5'>Stats</h5>
-                <div className=''>{idPokemon && dataPokemon.stats.map((stat, i) => (<div key={i} className='mr-2'>{stat.stat.name} : {stat.base_stat}</div>))}</div>
+                <div className=''>{ id && idPokemon && dataPokemon.stats.map((stat, i) => (<div key={i} className='mr-2'>{stat.stat.name} : {stat.base_stat}</div>))}</div>
             </div>
             <div className='col-4'>
                 <h5 className='mt-5'>Abilities</h5>
-                <div>{idPokemon && dataPokemon.abilities.map((ability, i) => (
+                <div>{ id && idPokemon && dataPokemon.abilities.map((ability, i) => (
                     ability.is_hidden === true ? <div key={i} style={{ color: 'red' }}>{ability.ability.name} (hidden)</div> : <div key={i} >{ability.ability.name}</div>
                 ))}
                 </div>

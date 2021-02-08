@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
-
 import { useCookies } from 'react-cookie';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
-import { createPortal } from 'react-dom';
 
 const Login = () => {
 

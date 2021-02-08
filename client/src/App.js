@@ -4,7 +4,7 @@ import Home from './components/home/home'
 import React from 'react';
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import createHistory from "history/createBrowserHistory";
+//import createHistory from "history/createBrowserHistory";
 
 /*
 <Router history={browserHistory}>
@@ -14,7 +14,7 @@ import createHistory from "history/createBrowserHistory";
 
 const App = () => {
   
-  const browserHistory = createHistory();
+  //const browserHistory = createHistory();
   return (
     <div className="App">
       <Home />
