@@ -14,6 +14,7 @@ const Pokemon = (idPokemonSearch) => {
     // recupere parametre dans l'url
     let { id } = useParams();
 
+    //pas de id
     if (id == '' || id == undefined) {
         id = idPokemonSearch.id
     }
