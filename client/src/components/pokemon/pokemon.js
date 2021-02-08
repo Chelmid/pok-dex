@@ -7,7 +7,6 @@ import {
 import PokemonSearch from './pokemonSearch';
 
 const Pokemon = (idPokemonSearch) => {
-    console.log(idPokemonSearch.id)
     // les state dans ReducerPokemon
     const { idPokemon, dataPokemon, apiPokemonSolo, colorTypes } = useSelector(state => state.ReducerPokemon);
     const dispatch = useDispatch();
@@ -28,7 +27,6 @@ const Pokemon = (idPokemonSearch) => {
             .then(
                 (data) => {
                     //appel des dispacth dans le ReducerPokemon
-                    console.log(data)
                     dispatch({
                         type: 'SET_POKEMON_DATA',
                         data: data

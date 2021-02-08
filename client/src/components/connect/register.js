@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from "react-router-dom";
 
 const Register = () => {
 
+    const history = useHistory()
     // useState
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
@@ -40,7 +42,7 @@ const Register = () => {
                 email: email,
                 name: name,
                 password: pwd
-            }).then(res => setMsg(res.data.message)/*history.push('/login')*/).catch(error => setMsg('serveur erreur'))
+            }).then(res => setMsg(res.data.message),history.push('/login')).catch(error => setMsg('serveur erreur'))
             setMessage('')
         } else {
             if (name.length <= 5 || pwd.length <= 5) {

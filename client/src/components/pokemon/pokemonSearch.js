@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import { Redirect } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 import Pokemon from './pokemon';
 
@@ -8,12 +7,13 @@ const PokemonSearch = () => {
 
     const [namePokemon, setNamePokemon] = useState('')
     const [id, setId] = useState('')
-    const history = useHistory()
+    const [msg, setMsg] = useState('')
     const onSearch = (e) => {
         e.preventDefault()
         fetch('https://pokeapi.co/api/v2/pokemon/' + namePokemon).then(response =>  response.json()).then(data => {
-            setId(data.id) 
-        })
+            setId(data.id)
+            setMsg('')
+        }).catch(error => setMsg('pokemon introuvable'))
     }
 
     const onSearchValue = (e) => {
@@ -28,8 +28,8 @@ const PokemonSearch = () => {
                 <input name='pokemonName' onChange={onSearchValue} />
                 <button>Search</button>
             </form>
-            
-           {id != '' && <Pokemon id={id}/>}
+            {msg.length > 0 && msg}
+           {id != '' && msg.length == 0 && <Pokemon id={id}/>}
         </div>
     )
 
