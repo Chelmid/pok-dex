@@ -5,9 +5,12 @@ import Pokemon from './pokemon';
 
 const PokemonSearch = () => {
 
+    //useState
     const [namePokemon, setNamePokemon] = useState('')
     const [id, setId] = useState('')
     const [msg, setMsg] = useState('')
+
+    // click recherche pokemon
     const onSearch = (e) => {
         e.preventDefault()
         fetch('https://pokeapi.co/api/v2/pokemon/' + namePokemon).then(response =>  response.json()).then(data => {
@@ -16,6 +19,7 @@ const PokemonSearch = () => {
         }).catch(error => setMsg('pokemon introuvable'))
     }
 
+    //si n'est pas vide la value
     const onSearchValue = (e) => {
         if(e.target.value !== '' || e.target.value !== undefined){
             setNamePokemon(e.target.value.toLowerCase())

@@ -12,15 +12,15 @@ import PokemonTeam from './pokemonTeam'
 
 const PokemonList = () => {
 
-    // props qui vient de home
+    // reducer, useState, cookies, history
     const { apiPokemon, displayList, pokemonListContinue, total, pokemonListTotal } = useSelector(state => state.ReducerPokemonlist);
-    const { connect} = useSelector(state => state.ConnectUserReducer);
+    const { connect } = useSelector(state => state.ConnectUserReducer);
     const [pokemonList, setPokemonList] = useState([])
     const [cookies, removeCookie] = useCookies(['cookie-name']);
     const [msg, setMsg] = useState('')
     const history = useHistory();
 
-
+    // click retour page home
     const onclickSet = () => (
         dispatch({
             type: 'STATUS_ONE_POKEMON',
@@ -58,19 +58,21 @@ const PokemonList = () => {
                     }
                 )
         }
+
+        // verifie si le cookies emall n'est pas vide
         if (cookies.email !== undefined) {
             axios.post('/pokemon/list/onload', { email: cookies.email }).then((response) => (
-            dispatch({
-                type: 'ONLOAD_POKEMON_TEAMS',
-                pokemonTeamOnload: response.data.idTeam
-            }),
-            dispatch({
-                type: 'ONLOAD_POKEMON_CAPTURE',
-                pokemonCaptureOnload: response.data.idCapture
-            }))
+                dispatch({
+                    type: 'ONLOAD_POKEMON_TEAMS',
+                    pokemonTeamOnload: response.data.idTeam
+                }),
+                dispatch({
+                    type: 'ONLOAD_POKEMON_CAPTURE',
+                    pokemonCaptureOnload: response.data.idCapture
+                }))
             )
         }
-    }, [apiPokemon, dispatch, displayList,cookies.email,history,removeCookie])
+    }, [apiPokemon, dispatch, displayList, cookies.email, history, removeCookie])
 
     // debounce scrolling infini
 
@@ -82,6 +84,7 @@ const PokemonList = () => {
                 continue: 30
             })
         }
+        // la suite de la liste 
         fetch(pokemonListContinue)
             .then(res => res.json())
             .then(
@@ -118,10 +121,10 @@ const PokemonList = () => {
                                         </div>
                                         <li className="text-center capitalize">{pokemonList.name}</li>
                                     </Link>
-                                    
-                                    <PokemonCapture id={(i)} ratio={(ratio)}/>
-                                    <PokemonTeam id={(i)} ratio={(ratio)}/>
-                                    
+
+                                    <PokemonCapture id={(i)} ratio={(ratio)} />
+                                    <PokemonTeam id={(i)} ratio={(ratio)} />
+
                                 </div>
                             ))}
 
@@ -136,8 +139,8 @@ const PokemonList = () => {
                                             <li className="text-center capitalize">{pokemonListNext.name}</li>
                                         </Link>
 
-                                        <PokemonCapture id={(total + i)} ratio={(ratio)}/>
-                                        <PokemonTeam id={(total + i)} ratio={(ratio)}/>
+                                        <PokemonCapture id={(total + i)} ratio={(ratio)} />
+                                        <PokemonTeam id={(total + i)} ratio={(ratio)} />
 
                                     </div>
                                     : ''

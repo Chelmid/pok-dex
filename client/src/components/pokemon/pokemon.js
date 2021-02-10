@@ -1,20 +1,17 @@
 import React, { useEffect } from 'react';
 // on va se connecter au store pour lire le state
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    useParams
-} from "react-router-dom";
-import PokemonSearch from './pokemonSearch';
+import { useParams } from "react-router-dom";
 
 const Pokemon = (idPokemonSearch) => {
-    // les state dans ReducerPokemon
+    // les state dans ReducerPokemon et dispatch
     const { idPokemon, dataPokemon, apiPokemonSolo, colorTypes } = useSelector(state => state.ReducerPokemon);
     const dispatch = useDispatch();
 
     // recupere parametre dans l'url
     let { id } = useParams();
 
-    //pas de id
+    //pas de id, on mettre le id de la recherche trouvé
     if (id == '' || id == undefined) {
         id = idPokemonSearch.id
     }

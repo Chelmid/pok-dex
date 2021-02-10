@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 
 const PokemonCapture = (pokemon) => {
 
+    //disoatch, cookies, history, reducer
     const dispatch = useDispatch();
     const [cookies, removeCookie] = useCookies(['cookie-name']);
     const history = useHistory();

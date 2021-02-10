@@ -6,11 +6,13 @@ import { useHistory } from "react-router-dom";
 
 const PokemonCapture = (pokemon) => {
 
+    // dispatch, cookies, usehistory, reducer
     const dispatch = useDispatch();
     const [cookies, removeCookie] = useCookies(['cookie-name']);
     const history = useHistory();
     const { connect, pokemonCapture, messageCapture } = useSelector(state => state.ConnectUserReducer);
 
+    // remove de la list des capture des pokemon
     const onClickRemovePokemonListCapture = (i, e) => {
 
         e.preventDefault()
@@ -34,6 +36,7 @@ const PokemonCapture = (pokemon) => {
 
     }
 
+    // ajouter les pokemons dans la list des captures
     const onClickAddPokemonListCapture = (i, e) => {
         console.log(e)
         e.preventDefault()
