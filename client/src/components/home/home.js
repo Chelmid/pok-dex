@@ -1,9 +1,4 @@
 import React from 'react';
-
-// reducer autre facon
-//import { init, setPokemon, setStatusOnePokemon } from '../../reducer/autres/actions-type'
-
-// on va se connecter au store pour lire le state
 import { useSelector } from 'react-redux';
 import PokemonList from '../pokemon/pokemonList';
 import Pokemon from '../pokemon/pokemon';
@@ -12,16 +7,10 @@ import Menu from '../menu/menu';
 import Login from '../connect/login'
 import Register from '../connect/register'
 
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PokemonSearch from '../pokemon/pokemonSearch';
 
-
 const Home = () => {
-
 
     const { connect} = useSelector(state => state.ConnectUserReducer);
 

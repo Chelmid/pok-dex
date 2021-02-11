@@ -1,7 +1,7 @@
 //autre facon
 //import { INIT, SET_POKEMON_ID, STATUS_ONE_POKEMON } from './constant-actions'
 
-//init 
+//init parametres
 let totalInit = 70
 let limiteInit = 10
 let pokemonListTotalApi = 850
@@ -21,18 +21,22 @@ let ReducerPokemonlist = (state = initialState, action = {}) => {
 
     switch (action.type) {
 
+        //id pokemon
         case 'INIT_LIST':
 
             return { ...state, countPokemon: state.countPokemon.push(action.payload) }
 
+        // afficher la liste ou pas
         case 'STATUS_ONE_POKEMON':
 
             return { ...state, displayList: action.display, pokedex: action.pokedex }
 
+        // compteur
         case 'COUNTER_POKEMON':
 
             return { ...state, countPokemon: action.counter }
 
+        // charger la liste suivant
         case 'LIST_CONTINUE_POKEMON':
 
             if (state.limite <= pokemonListTotalApi) {
@@ -42,6 +46,7 @@ let ReducerPokemonlist = (state = initialState, action = {}) => {
                 return state;
             }
 
+        // total de la liste
         case 'LIST_TOTAL_POKEMON':
 
             return { ...state, pokemonListTotal: action.nextList }

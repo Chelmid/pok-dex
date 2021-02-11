@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-// on va se connecter au store pour lire le state
 import { Link } from "react-router-dom";
 import debounce from "lodash.debounce";
 import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
-
 import PokemonCapture from './pokemonCapture'
 import PokemonTeam from './pokemonTeam'
 

@@ -1,6 +1,3 @@
-//autres facon
-//import { INIT, SET_POKEMON_ID, STATUS_ONE_POKEMON } from './constant-actions'
-
 // initialisation des states
 const initialState = {
     idPokemon: '',

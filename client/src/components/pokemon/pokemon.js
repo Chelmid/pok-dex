@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-// on va se connecter au store pour lire le state
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 
