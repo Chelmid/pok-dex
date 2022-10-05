@@ -10,6 +10,7 @@ Les languges et autres utilisés :
 * mongoDB
 * Boostrap
 * Heruko
+* Redux 
 
 Démarrer le projet
 
