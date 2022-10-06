@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // server
-mongoConnectionString = ""
+mongoConnectionString = "Key_secret"
 
 //promise de la connection
 const connect = mongoose.connect(mongoConnectionString, { useNewUrlParser: true, useUnifiedTopology: true })
